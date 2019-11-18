@@ -48,9 +48,9 @@
             // 
             // cTimeIntTextBox
             // 
-            this.cTimeIntTextBox.Location = new System.Drawing.Point(175, 10);
+            this.cTimeIntTextBox.Location = new System.Drawing.Point(180, 11);
             this.cTimeIntTextBox.Name = "cTimeIntTextBox";
-            this.cTimeIntTextBox.Size = new System.Drawing.Size(247, 22);
+            this.cTimeIntTextBox.Size = new System.Drawing.Size(375, 22);
             this.cTimeIntTextBox.TabIndex = 1;
             this.cTimeIntTextBox.Text = "2019-02-19T23:00Z/2019-02-20T23:00Z";
             // 
@@ -66,18 +66,18 @@
             // 
             // SIndentificationTextBox
             // 
-            this.SIndentificationTextBox.Location = new System.Drawing.Point(175, 39);
+            this.SIndentificationTextBox.Location = new System.Drawing.Point(180, 39);
             this.SIndentificationTextBox.Name = "SIndentificationTextBox";
-            this.SIndentificationTextBox.Size = new System.Drawing.Size(247, 22);
+            this.SIndentificationTextBox.Size = new System.Drawing.Size(375, 22);
             this.SIndentificationTextBox.TabIndex = 3;
             this.SIndentificationTextBox.Text = "17XTSO-CS------W";
             this.SIndentificationTextBox.TextChanged += new System.EventHandler(this.SIndentificationTextBox_TextChanged);
             // 
             // RIndentificationTextBox
             // 
-            this.RIndentificationTextBox.Location = new System.Drawing.Point(175, 67);
+            this.RIndentificationTextBox.Location = new System.Drawing.Point(180, 67);
             this.RIndentificationTextBox.Name = "RIndentificationTextBox";
-            this.RIndentificationTextBox.Size = new System.Drawing.Size(247, 22);
+            this.RIndentificationTextBox.Size = new System.Drawing.Size(375, 22);
             this.RIndentificationTextBox.TabIndex = 4;
             this.RIndentificationTextBox.Text = "17XTSO-CS------W";
             // 
@@ -94,7 +94,7 @@
             // 
             this.okBtn.Location = new System.Drawing.Point(15, 96);
             this.okBtn.Name = "okBtn";
-            this.okBtn.Size = new System.Drawing.Size(407, 29);
+            this.okBtn.Size = new System.Drawing.Size(540, 29);
             this.okBtn.TabIndex = 6;
             this.okBtn.Text = "OK";
             this.okBtn.UseVisualStyleBackColor = true;
@@ -104,7 +104,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 138);
+            this.ClientSize = new System.Drawing.Size(567, 138);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.RIndentificationTextBox);
