@@ -110,9 +110,25 @@ namespace xmlGenerator
                 foreach (var criticalBranch in criticalBranches)
                 {
                     if (criticalBranch.TsoOrigin != tsoOrigin) continue;
-                    XmlElement criticalBranchElement = doc.CreateElement("criticalBranch");
 
-             
+                    Outage outage = null;
+                    foreach (var item in outages)
+                    {
+                        if (item.TsoOrigin != criticalBranch.TsoOrigin) continue;
+                        if (item.From == criticalBranch.From) continue;
+                        if (item.To == criticalBranch.To) continue;
+                        outage = item;
+                        break;
+                    }
+                    if(outage == null)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("No possible outage!");
+                        Console.WriteLine("Press Enter to exit");
+                        Console.ReadLine();
+                        return;
+                    }
+                    XmlElement criticalBranchElement = doc.CreateElement("criticalBranch");
 
                     XmlElement timeIntervalXml = doc.CreateElement("timeInterval");
                     timeIntervalXml.SetAttribute("v", cTimeInterval);
@@ -127,6 +143,10 @@ namespace xmlGenerator
                     XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
                     tsoOriginElement.InnerText = tsoOrigin;
                     criticalBranchElement.AppendChild(tsoOriginElement);
+
+                    XmlElement outageElement = doc.CreateElement("outage");
+                    outageElement.SetAttribute("id", outage.id);
+                    criticalBranchElement.AppendChild(outageElement);
 
                     criticalBranchesXml.AppendChild(criticalBranchElement);
                 }
@@ -149,7 +169,6 @@ namespace xmlGenerator
                 }
             }
 
-            Console.ReadLine();
         }
         static void WriteHeader(XmlElement rootNode, string cTimeInterval, string sIdentification, string rIdentification)
         {

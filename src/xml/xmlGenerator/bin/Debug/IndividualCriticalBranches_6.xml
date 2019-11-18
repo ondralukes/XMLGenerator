@@ -6,8 +6,9 @@
   <criticalBranches>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="4" to="6" order="32" />
+      <branch from="6" to="4" order="32" />
       <tsoOrigin>6</tsoOrigin>
+      <outage id="OU-47-522" />
     </criticalBranch>
   </criticalBranches>
 </FlowBasedContingency>
