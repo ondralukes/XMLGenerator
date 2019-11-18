@@ -3,4 +3,10 @@
   <ServerIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+  <criticalBranches>
+    <criticalBranch id="OU-61-7692">
+      <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+      <tsoOrigin>1</tsoOrigin>
+    </criticalBranch>
+  </criticalBranches>
 </FlowBasedContingency>

@@ -12,11 +12,12 @@ namespace xmlGenerator
 {
     class Program
     {
+        static Random rnd;
         [STAThread]
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
-            Random rnd = new Random();
+            rnd = new Random();
             InputPrompt prompt;
             while (true)
             {
@@ -27,7 +28,8 @@ namespace xmlGenerator
                 {
                     Console.WriteLine("OK");
                     break;
-                } else
+                }
+                else
                 {
                     Console.WriteLine("Failed");
                 }
@@ -37,9 +39,9 @@ namespace xmlGenerator
             string sIdentification = prompt.senderIndentification;
             string rIdentification = prompt.receiverIndentification;
 
-            List<Item> items = LoadDataFromCSV("data.csv");
+            List<Outage> outages = LoadDataFromCSV("data.csv");
             List<string> tsoOrigins = new List<string>();
-            foreach (var item in items)
+            foreach (var item in outages)
             {
                 if (!tsoOrigins.Contains(item.TsoOrigin)) tsoOrigins.Add(item.TsoOrigin);
             }
@@ -58,13 +60,13 @@ namespace xmlGenerator
 
             WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
 
-            XmlElement outages = doc.CreateElement("outages");
-            rootNode.AppendChild(outages);
+            XmlElement outagesElement = doc.CreateElement("outages");
+            rootNode.AppendChild(outagesElement);
 
-            foreach (var item in items)
+            foreach (var item in outages)
             {
                 XmlElement outage = doc.CreateElement("outage");
-                outage.SetAttribute("id", $"OU-{rnd.Next(100)}-{rnd.Next(10000)}");
+                outage.SetAttribute("id", item.id);
                 XmlElement branch = doc.CreateElement("branch");
                 branch.SetAttribute("eic", item.TsoOrigin);
                 branch.SetAttribute("elementName", item.ElementName);
@@ -72,58 +74,75 @@ namespace xmlGenerator
                 branch.SetAttribute("to", item.To);
 
                 outage.AppendChild(branch);
-                outages.AppendChild(outage);
+                outagesElement.AppendChild(outage);
             }
             Console.WriteLine("Saving...");
-            if (SaveXML(doc, "ContingencyDictionary.xml"))
-            {
-                Console.WriteLine("Press O to open, E to open location or any other key to close");
-                while (true)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey();
-                    if (key.Key == ConsoleKey.O)
-                    {
-                        Process.Start("out.xml");
-                    }
-                    else if (key.Key == ConsoleKey.E)
-                    {
-                        string argument = "/select, \"" + new FileInfo("ContingencyDictionary.xml").FullName + "\"";
-                        Process.Start("explorer.exe", argument);
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
+
             #endregion
 
             //////////////////////////////////////////////
             /////// IndividualCriticalBranches.xml ///////
             //////////////////////////////////////////////
-            //#region IndividualCriticalBranches.xml
-            //Console.WriteLine("Generating IndividualCriticalBranches.xml...");
-            //foreach (var tsoOrigin in tsoOrigins)
-            //{
-            //    Console.WriteLine($"Generating IndividualCriticalBranches.xml for tsoOrigin {tsoOrigin}...");
-            //    doc = new XmlDocument();
+            #region IndividualCriticalBranches.xml
+            Console.WriteLine("Generating IndividualCriticalBranches.xml...");
+            foreach (var tsoOrigin in tsoOrigins)
+            {
 
-            //    rootNode = doc.CreateElement("FlowBasedContingency");
-            //    rootNode.SetAttribute("xmnls", "flowbased");
-            //    rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            //    rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-1.xsd");
+                Console.WriteLine($"Generating IndividualCriticalBranches.xml for tsoOrigin {tsoOrigin}...");
 
-            //    doc.AppendChild(rootNode);
 
-            //    WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
 
-            //    Console.WriteLine("Saving...");
-            //    SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml");
-            //}
-            //#endregion
+                doc = new XmlDocument();
+
+                rootNode = doc.CreateElement("FlowBasedContingency");
+                rootNode.SetAttribute("xmnls", "flowbased");
+                rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-1.xsd");
+
+                doc.AppendChild(rootNode);
+
+                WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
+
+                XmlElement criticalBranchesXml = doc.CreateElement("criticalBranches");
+                rootNode.AppendChild(criticalBranchesXml);
+                foreach (var outage in outages)
+                {
+                    if (outage.TsoOrigin != tsoOrigin) continue;
+                    XmlElement criticalBranch = doc.CreateElement("criticalBranch");
+                    criticalBranch.SetAttribute("id", outage.id);
+
+                    XmlElement timeIntervalXml = doc.CreateElement("timeInterval");
+                    timeIntervalXml.SetAttribute("v", cTimeInterval);
+                    criticalBranch.AppendChild(timeIntervalXml);
+
+                    XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
+                    tsoOriginElement.InnerText = tsoOrigin;
+                    criticalBranch.AppendChild(tsoOriginElement);
+
+                    criticalBranchesXml.AppendChild(criticalBranch);
+                }
+                Console.WriteLine("Saving...");
+                SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml");
+            }
+            #endregion
+            Console.WriteLine("Press O to open location or any other key to close");
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey();
+                if (key.Key == ConsoleKey.O)
+                {
+                    string argument = Directory.GetCurrentDirectory();
+                    Process.Start("explorer.exe", argument);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
             Console.ReadLine();
         }
-        static void WriteHeader(XmlElement rootNode,string cTimeInterval, string sIdentification, string rIdentification)
+        static void WriteHeader(XmlElement rootNode, string cTimeInterval, string sIdentification, string rIdentification)
         {
             XmlDocument doc = rootNode.OwnerDocument;
             XmlElement sIdentElement = doc.CreateElement("ServerIdentification");
@@ -142,7 +161,7 @@ namespace xmlGenerator
         }
         static bool SaveXML(XmlDocument doc, string filename)
         {
-            
+
             if (File.Exists(filename))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -153,19 +172,20 @@ namespace xmlGenerator
                     int cursorLeftPos = Console.CursorLeft;
                     ConsoleKeyInfo key = Console.ReadKey();
                     Console.SetCursorPosition(cursorLeftPos, Console.CursorTop);
-                    if(key.Key == ConsoleKey.Y)
+                    if (key.Key == ConsoleKey.Y)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Overwriting");
                         Console.ResetColor();
                         break;
-                    } else if(key.Key == ConsoleKey.N)
+                    }
+                    else if (key.Key == ConsoleKey.N)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("File not saved");
                         Console.ResetColor();
-                        return false; 
-                        
+                        return false;
+
                     }
                 }
             }
@@ -208,34 +228,35 @@ namespace xmlGenerator
                 }
             }
         }
-        static List<Item> LoadDataFromCSV(string filename)
+        static List<Outage> LoadDataFromCSV(string filename)
         {
             StreamReader streamReader = new StreamReader(filename);
 
             //Skip header
             streamReader.ReadLine();
-            List<Item> items = new List<Item>();
+            List<Outage> items = new List<Outage>();
             while (!streamReader.EndOfStream)
             {
                 string line = streamReader.ReadLine();
                 string[] strValues = line.Split(';');
-                Item item = new Item();
+                Outage item = new Outage();
                 item.From = strValues[0];
                 item.To = strValues[1];
                 item.ElementName = strValues[2];
                 item.TsoOrigin = strValues[3];
-               
+                item.id = $"OU-{rnd.Next(100)}-{rnd.Next(10000)}";
                 items.Add(item);
             }
             Console.WriteLine($"Loaded {items.Count} items");
             return items;
         }
-        class Item
+        class Outage
         {
             public string From;
             public string To;
             public string ElementName;
             public string TsoOrigin;
+            public string id;
 
         }
     }
