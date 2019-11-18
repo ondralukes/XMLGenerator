@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Windows.Forms;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,8 +80,23 @@ namespace xmlGenerator
             Console.Write("Saving...");
             StreamWriter outputStream = new StreamWriter("out.xml");
             doc.Save(outputStream);
+            outputStream.Close();
             Console.WriteLine($" Size: {new FileInfo("out.xml").Length} bytes");
-            Console.ReadLine();
+            Console.WriteLine("Press O to open, E to open location or any other key to close");
+            while (true) {
+                ConsoleKeyInfo key = Console.ReadKey();
+                if(key.Key == ConsoleKey.O)
+                {
+                    Process.Start("out.xml");
+                } else if(key.Key == ConsoleKey.E)
+                {
+                    string argument = "/select, \"" + new FileInfo("out.xml").FullName + "\"";
+                    Process.Start("explorer.exe", argument);
+                } else
+                {
+                    break;
+                }
+            }
         }
         static List<Item> LoadDataFromCSV(string filename)
         {
