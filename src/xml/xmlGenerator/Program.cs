@@ -16,7 +16,7 @@ namespace xmlGenerator
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
-
+            Random rnd = new Random();
             InputPrompt prompt;
             while (true)
             {
@@ -64,6 +64,7 @@ namespace xmlGenerator
             foreach (var item in items)
             {
                 XmlElement outage = doc.CreateElement("outage");
+                outage.SetAttribute("id", $"OU-{rnd.Next(100)}-{rnd.Next(10000)}");
                 XmlElement branch = doc.CreateElement("branch");
                 branch.SetAttribute("eic", item.TsoOrigin);
                 branch.SetAttribute("elementName", item.ElementName);
@@ -119,7 +120,7 @@ namespace xmlGenerator
             //    Console.WriteLine("Saving...");
             //    SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml");
             //}
-//#endregion
+            //#endregion
             Console.ReadLine();
         }
         static void WriteHeader(XmlElement rootNode,string cTimeInterval, string sIdentification, string rIdentification)
