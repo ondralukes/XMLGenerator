@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using System.Windows.Forms;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,31 @@ namespace xmlGenerator
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+
+            InputPrompt prompt;
+            while (true)
+            {
+                Console.Write("Getting user input...");
+                prompt = new InputPrompt();
+                prompt.ShowDialog();
+                if (prompt.inputOK)
+                {
+                    Console.WriteLine("OK");
+                    break;
+                } else
+                {
+                    Console.WriteLine("Failed");
+                }
+            }
+
+            string cTimeInterval = prompt.constraintTimeInterval;
+            string sIdentification = prompt.senderIndentification;
+            string rIdentification = prompt.receiverIndentification;
+
             List<Item> items = LoadDataFromCSV("data.csv");
 
             XmlDocument doc = new XmlDocument();
@@ -21,6 +45,21 @@ namespace xmlGenerator
             rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             rootNode.SetAttribute("xsi:schemaLocation","flowbasedcontingency-1.xsd");
             doc.AppendChild(rootNode);
+
+            XmlElement sIdentElement = doc.CreateElement("ServerIdentification");
+            sIdentElement.SetAttribute("codingScheme", "A01");
+            sIdentElement.SetAttribute("v", sIdentification);
+            rootNode.AppendChild(sIdentElement);
+
+            XmlElement rIdentElement = doc.CreateElement("ReceiverIdentification");
+            rIdentElement.SetAttribute("codingScheme", "A01");
+            rIdentElement.SetAttribute("v", rIdentification);
+            rootNode.AppendChild(rIdentElement);
+
+            XmlElement cTimeIntElement = doc.CreateElement("ConstraintTimeInterval");
+            cTimeIntElement.SetAttribute("v", cTimeInterval);
+            rootNode.AppendChild(cTimeIntElement);
+
 
             XmlElement outages = doc.CreateElement("outages");
             rootNode.AppendChild(outages);
