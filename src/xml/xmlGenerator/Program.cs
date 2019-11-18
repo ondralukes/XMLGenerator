@@ -76,8 +76,10 @@ namespace xmlGenerator
                 outage.AppendChild(branch);
                 outages.AppendChild(outage);
             }
+            Console.Write("Saving...");
             StreamWriter outputStream = new StreamWriter("out.xml");
             doc.Save(outputStream);
+            Console.WriteLine($" Size: {new FileInfo("out.xml").Length} bytes");
             Console.ReadLine();
         }
         static List<Item> LoadDataFromCSV(string filename)
@@ -96,9 +98,10 @@ namespace xmlGenerator
                 item.To = strValues[1];
                 item.ElementName = strValues[2];
                 item.TsoOrigin = strValues[3];
-                Console.WriteLine($"From {item.From} To {item.To} ElementName {item.ElementName} TsoOrigin {item.TsoOrigin}");
+               
                 items.Add(item);
             }
+            Console.WriteLine($"Loaded {items.Count} items");
             return items;
         }
         class Item
