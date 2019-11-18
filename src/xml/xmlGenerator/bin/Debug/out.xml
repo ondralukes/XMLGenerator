@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FlowBasedContingency xmnls="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaLocation="flowbasedcontingency - 1.xsd">
+  <outages>
+    <outage>
+      <branch eic="1" elementName="43" from="3" to="8" />
+    </outage>
+    <outage>
+      <branch eic="3" elementName="35" from="2" to="7" />
+    </outage>
+    <outage>
+      <branch eic="4" elementName="654" from="1" to="5" />
+    </outage>
+    <outage>
+      <branch eic="5" elementName="324" from="7" to="6" />
+    </outage>
+    <outage>
+      <branch eic="4" elementName="534" from="5" to="4" />
+    </outage>
+    <outage>
+      <branch eic="9" elementName="731" from="6" to="3" />
+    </outage>
+    <outage>
+      <branch eic="4" elementName="124" from="8" to="0" />
+    </outage>
+    <outage>
+      <branch eic="12" elementName="25" from="4" to="3" />
+    </outage>
+    <outage>
+      <branch eic="14" elementName="167" from="5" to="1" />
+    </outage>
+    <outage>
+      <branch eic="0" elementName="54" from="9" to="9" />
+    </outage>
+    <outage>
+      <branch eic="14" elementName="321" from="3" to="4" />
+    </outage>
+    <outage>
+      <branch eic="6" elementName="32" from="4" to="6" />
+    </outage>
+    <outage>
+      <branch eic="7" elementName="454" from="0" to="4" />
+    </outage>
+  </outages>
+</FlowBasedContingency>
