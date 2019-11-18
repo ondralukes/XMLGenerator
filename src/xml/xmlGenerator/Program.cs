@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using System.Windows.Forms;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +12,31 @@ namespace xmlGenerator
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+
+            InputPrompt prompt;
+            while (true)
+            {
+                Console.Write("Getting user input...");
+                prompt = new InputPrompt();
+                prompt.ShowDialog();
+                if (prompt.inputOK)
+                {
+                    Console.WriteLine("OK");
+                    break;
+                } else
+                {
+                    Console.WriteLine("Failed");
+                }
+            }
+
+            string cTimeInterval = prompt.constraintTimeInterval;
+            string sIdentification = prompt.senderIndentification;
+            string rIdentification = prompt.receiverIndentification;
+
             List<Item> items = LoadDataFromCSV("data.csv");
 
             XmlDocument doc = new XmlDocument();
@@ -21,6 +46,21 @@ namespace xmlGenerator
             rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             rootNode.SetAttribute("xsi:schemaLocation","flowbasedcontingency-1.xsd");
             doc.AppendChild(rootNode);
+
+            XmlElement sIdentElement = doc.CreateElement("ServerIdentification");
+            sIdentElement.SetAttribute("codingScheme", "A01");
+            sIdentElement.SetAttribute("v", sIdentification);
+            rootNode.AppendChild(sIdentElement);
+
+            XmlElement rIdentElement = doc.CreateElement("ReceiverIdentification");
+            rIdentElement.SetAttribute("codingScheme", "A01");
+            rIdentElement.SetAttribute("v", rIdentification);
+            rootNode.AppendChild(rIdentElement);
+
+            XmlElement cTimeIntElement = doc.CreateElement("ConstraintTimeInterval");
+            cTimeIntElement.SetAttribute("v", cTimeInterval);
+            rootNode.AppendChild(cTimeIntElement);
+
 
             XmlElement outages = doc.CreateElement("outages");
             rootNode.AppendChild(outages);
@@ -37,9 +77,26 @@ namespace xmlGenerator
                 outage.AppendChild(branch);
                 outages.AppendChild(outage);
             }
+            Console.Write("Saving...");
             StreamWriter outputStream = new StreamWriter("out.xml");
             doc.Save(outputStream);
-            Console.ReadLine();
+            outputStream.Close();
+            Console.WriteLine($" Size: {new FileInfo("out.xml").Length} bytes");
+            Console.WriteLine("Press O to open, E to open location or any other key to close");
+            while (true) {
+                ConsoleKeyInfo key = Console.ReadKey();
+                if(key.Key == ConsoleKey.O)
+                {
+                    Process.Start("out.xml");
+                } else if(key.Key == ConsoleKey.E)
+                {
+                    string argument = "/select, \"" + new FileInfo("out.xml").FullName + "\"";
+                    Process.Start("explorer.exe", argument);
+                } else
+                {
+                    break;
+                }
+            }
         }
         static List<Item> LoadDataFromCSV(string filename)
         {
@@ -57,9 +114,10 @@ namespace xmlGenerator
                 item.To = strValues[1];
                 item.ElementName = strValues[2];
                 item.TsoOrigin = strValues[3];
-                Console.WriteLine($"From {item.From} To {item.To} ElementName {item.ElementName} TsoOrigin {item.TsoOrigin}");
+               
                 items.Add(item);
             }
+            Console.WriteLine($"Loaded {items.Count} items");
             return items;
         }
         class Item

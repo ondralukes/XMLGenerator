@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FlowBasedContingency xmnls="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaLocation="flowbasedcontingency - 1.xsd">
+<FlowBasedContingency xmnls="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" schemaLocation="flowbasedcontingency-1.xsd">
+  <ServerIdentification codingScheme="A01" v="17XTSO-CS------W" />
+  <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
+  <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <outages>
     <outage>
       <branch eic="1" elementName="43" from="3" to="8" />
