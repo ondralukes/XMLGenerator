@@ -1,0 +1,7 @@
+C:\Users\Ondra\source\repos\xml\xmlGenerator\bin\Debug\xmlGenerator.exe.config
+C:\Users\Ondra\source\repos\xml\xmlGenerator\bin\Debug\xmlGenerator.exe
+C:\Users\Ondra\source\repos\xml\xmlGenerator\bin\Debug\xmlGenerator.pdb
+C:\Users\Ondra\source\repos\xml\xmlGenerator\obj\Debug\xmlGenerator.csprojAssemblyReference.cache
+C:\Users\Ondra\source\repos\xml\xmlGenerator\obj\Debug\xmlGenerator.csproj.CoreCompileInputs.cache
+C:\Users\Ondra\source\repos\xml\xmlGenerator\obj\Debug\xmlGenerator.exe
+C:\Users\Ondra\source\repos\xml\xmlGenerator\obj\Debug\xmlGenerator.pdb
