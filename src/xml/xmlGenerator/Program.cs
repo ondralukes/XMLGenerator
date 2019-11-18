@@ -39,12 +39,14 @@ namespace xmlGenerator
             string sIdentification = prompt.senderIndentification;
             string rIdentification = prompt.receiverIndentification;
 
-            List<Outage> outages = LoadDataFromCSV("data.csv");
+            List<Outage> outages = LoadOutagesFromCSV("outages.csv");
+            List<CriticalBranches> criticalBranches = LoadCriticalBranchesFromCSV("criticalBranches.csv");
             List<string> tsoOrigins = new List<string>();
             foreach (var item in outages)
             {
                 if (!tsoOrigins.Contains(item.TsoOrigin)) tsoOrigins.Add(item.TsoOrigin);
             }
+            
             /////////////////////////////////////////
             /////// ContingencyDictionary.xml ///////
             /////////////////////////////////////////
@@ -228,7 +230,7 @@ namespace xmlGenerator
                 }
             }
         }
-        static List<Outage> LoadDataFromCSV(string filename)
+        static List<Outage> LoadOutagesFromCSV(string filename)
         {
             StreamReader streamReader = new StreamReader(filename);
 
@@ -247,7 +249,28 @@ namespace xmlGenerator
                 item.id = $"OU-{rnd.Next(100)}-{rnd.Next(10000)}";
                 items.Add(item);
             }
-            Console.WriteLine($"Loaded {items.Count} items");
+            Console.WriteLine($"Loaded {items.Count} outages");
+            return items;
+        }
+        static List<CriticalBranches> LoadCriticalBranchesFromCSV(string filename)
+        {
+            StreamReader streamReader = new StreamReader(filename);
+
+            //Skip header
+            streamReader.ReadLine();
+            List<CriticalBranches> items = new List<CriticalBranches>();
+            while (!streamReader.EndOfStream)
+            {
+                string line = streamReader.ReadLine();
+                string[] strValues = line.Split(';');
+                CriticalBranches item = new CriticalBranches();
+                item.From = strValues[0];
+                item.To = strValues[1];
+                item.Order = strValues[2];
+                item.TsoOrigin = strValues[3];
+                items.Add(item);
+            }
+            Console.WriteLine($"Loaded {items.Count} critical branches");
             return items;
         }
         class Outage
@@ -258,6 +281,13 @@ namespace xmlGenerator
             public string TsoOrigin;
             public string id;
 
+        }
+        class CriticalBranches
+        {
+            public string From;
+            public string To;
+            public string Order;
+            public string TsoOrigin;
         }
     }
 }
