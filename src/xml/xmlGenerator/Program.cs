@@ -38,15 +38,93 @@ namespace xmlGenerator
             string rIdentification = prompt.receiverIndentification;
 
             List<Item> items = LoadDataFromCSV("data.csv");
-
+            List<string> tsoOrigins = new List<string>();
+            foreach (var item in items)
+            {
+                if (!tsoOrigins.Contains(item.TsoOrigin)) tsoOrigins.Add(item.TsoOrigin);
+            }
+            /////////////////////////////////////////
+            /////// ContingencyDictionary.xml ///////
+            /////////////////////////////////////////
+            #region ContingencyDictionary.xml
+            Console.WriteLine("Generating ContingencyDictionary.xml...");
             XmlDocument doc = new XmlDocument();
 
             XmlElement rootNode = doc.CreateElement("FlowBasedContingency");
             rootNode.SetAttribute("xmnls", "flowbased");
             rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            rootNode.SetAttribute("xsi:schemaLocation","flowbasedcontingency-1.xsd");
+            rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-1.xsd");
             doc.AppendChild(rootNode);
 
+            WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
+
+            XmlElement outages = doc.CreateElement("outages");
+            rootNode.AppendChild(outages);
+
+            foreach (var item in items)
+            {
+                XmlElement outage = doc.CreateElement("outage");
+                XmlElement branch = doc.CreateElement("branch");
+                branch.SetAttribute("eic", item.TsoOrigin);
+                branch.SetAttribute("elementName", item.ElementName);
+                branch.SetAttribute("from", item.From);
+                branch.SetAttribute("to", item.To);
+
+                outage.AppendChild(branch);
+                outages.AppendChild(outage);
+            }
+            Console.WriteLine("Saving...");
+            if (SaveXML(doc, "ContingencyDictionary.xml"))
+            {
+                Console.WriteLine("Press O to open, E to open location or any other key to close");
+                while (true)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.O)
+                    {
+                        Process.Start("out.xml");
+                    }
+                    else if (key.Key == ConsoleKey.E)
+                    {
+                        string argument = "/select, \"" + new FileInfo("ContingencyDictionary.xml").FullName + "\"";
+                        Process.Start("explorer.exe", argument);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            #endregion
+
+            //////////////////////////////////////////////
+            /////// IndividualCriticalBranches.xml ///////
+            //////////////////////////////////////////////
+            //#region IndividualCriticalBranches.xml
+            //Console.WriteLine("Generating IndividualCriticalBranches.xml...");
+            //foreach (var tsoOrigin in tsoOrigins)
+            //{
+            //    Console.WriteLine($"Generating IndividualCriticalBranches.xml for tsoOrigin {tsoOrigin}...");
+            //    doc = new XmlDocument();
+
+            //    rootNode = doc.CreateElement("FlowBasedContingency");
+            //    rootNode.SetAttribute("xmnls", "flowbased");
+            //    rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            //    rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-1.xsd");
+
+            //    doc.AppendChild(rootNode);
+
+            //    WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
+
+            //    Console.WriteLine("Saving...");
+            //    SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml");
+            //}
+//#endregion
+            Console.ReadLine();
+        }
+        static void WriteHeader(XmlElement rootNode,string cTimeInterval, string sIdentification, string rIdentification)
+        {
+            XmlDocument doc = rootNode.OwnerDocument;
             XmlElement sIdentElement = doc.CreateElement("ServerIdentification");
             sIdentElement.SetAttribute("codingScheme", "A01");
             sIdentElement.SetAttribute("v", sIdentification);
@@ -60,41 +138,72 @@ namespace xmlGenerator
             XmlElement cTimeIntElement = doc.CreateElement("ConstraintTimeInterval");
             cTimeIntElement.SetAttribute("v", cTimeInterval);
             rootNode.AppendChild(cTimeIntElement);
-
-
-            XmlElement outages = doc.CreateElement("outages");
-            rootNode.AppendChild(outages);
-            foreach (var item in items)
+        }
+        static bool SaveXML(XmlDocument doc, string filename)
+        {
+            
+            if (File.Exists(filename))
             {
-                XmlElement outage = doc.CreateElement("outage");
-                XmlElement branch = doc.CreateElement("branch");
-                branch.SetAttribute("eic", item.TsoOrigin);
-                branch.SetAttribute("elementName", item.ElementName);
-                branch.SetAttribute("from", item.From);
-                branch.SetAttribute("to", item.To);
-                
-                
-                outage.AppendChild(branch);
-                outages.AppendChild(outage);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write($"{filename} already exists. Overwrite? [y/n]: ");
+                Console.ResetColor();
+                while (true)
+                {
+                    int cursorLeftPos = Console.CursorLeft;
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    Console.SetCursorPosition(cursorLeftPos, Console.CursorTop);
+                    if(key.Key == ConsoleKey.Y)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Overwriting");
+                        Console.ResetColor();
+                        break;
+                    } else if(key.Key == ConsoleKey.N)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("File not saved");
+                        Console.ResetColor();
+                        return false; 
+                        
+                    }
+                }
             }
-            Console.Write("Saving...");
-            StreamWriter outputStream = new StreamWriter("out.xml");
-            doc.Save(outputStream);
-            outputStream.Close();
-            Console.WriteLine($" Size: {new FileInfo("out.xml").Length} bytes");
-            Console.WriteLine("Press O to open, E to open location or any other key to close");
-            while (true) {
-                ConsoleKeyInfo key = Console.ReadKey();
-                if(key.Key == ConsoleKey.O)
+            while (true)
+            {
+                try
                 {
-                    Process.Start("out.xml");
-                } else if(key.Key == ConsoleKey.E)
+                    StreamWriter outputStream = new StreamWriter(filename);
+                    doc.Save(outputStream);
+                    outputStream.Close();
+                    return true;
+                }
+                catch (Exception e)
                 {
-                    string argument = "/select, \"" + new FileInfo("out.xml").FullName + "\"";
-                    Process.Start("explorer.exe", argument);
-                } else
-                {
-                    break;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Saving {filename} failed ({e.Message})");
+                    Console.Write("Retry? [y/n]:");
+                    Console.ResetColor();
+                    while (true)
+                    {
+                        int cursorLeftPos = Console.CursorLeft;
+                        ConsoleKeyInfo key = Console.ReadKey();
+                        Console.SetCursorPosition(cursorLeftPos, Console.CursorTop);
+                        if (key.Key == ConsoleKey.Y)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Retrying");
+                            Console.ResetColor();
+                            break;
+                        }
+                        else if (key.Key == ConsoleKey.N)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("File not saved");
+                            Console.ResetColor();
+                            return false;
+
+                        }
+                    }
                 }
             }
         }
