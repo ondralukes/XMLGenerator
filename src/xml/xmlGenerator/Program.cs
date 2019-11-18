@@ -13,6 +13,8 @@ namespace xmlGenerator
     class Program
     {
         static Random rnd;
+        static bool overwriteAll = false;
+        static bool dontOverwriteAll = false;
         [STAThread]
         static void Main(string[] args)
         {
@@ -192,31 +194,59 @@ namespace xmlGenerator
 
             if (File.Exists(filename))
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write($"{filename} already exists. Overwrite? [y/n]: ");
-                Console.ResetColor();
-                while (true)
+                
+                if (!overwriteAll && !dontOverwriteAll)
                 {
-                    int cursorLeftPos = Console.CursorLeft;
-                    ConsoleKeyInfo key = Console.ReadKey();
-                    Console.SetCursorPosition(cursorLeftPos, Console.CursorTop);
-                    if (key.Key == ConsoleKey.Y)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write($"{filename} already exists. Overwrite? [Y/N, O-Yes for all, K - No for all]: ");
+                    
+                    Console.ResetColor();
+                    while (true)
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Overwriting");
-                        Console.ResetColor();
-                        break;
+                        int cursorLeftPos = Console.CursorLeft;
+                        ConsoleKeyInfo key = Console.ReadKey();
+                        Console.SetCursorPosition(cursorLeftPos, Console.CursorTop);
+                        if (key.Key == ConsoleKey.Y || key.Key == ConsoleKey.O)
+                        {
+                            if (key.Key == ConsoleKey.O) overwriteAll = true;
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Overwriting");
+                            Console.ResetColor();
+                            break;
+                        }
+                        else if (key.Key == ConsoleKey.N || key.Key == ConsoleKey.K)
+                        {
+                            if (key.Key == ConsoleKey.K) dontOverwriteAll = true;
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("File not saved");
+                            Console.ResetColor();
+                            return false;
+
+                        }
                     }
-                    else if (key.Key == ConsoleKey.N)
+                }
+                else
+                {
+                    if (overwriteAll)
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write($"{filename} already exists. ");
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Overwriting.");
+                        Console.ResetColor();
+                    }
+                    else if (dontOverwriteAll)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write($"{filename} already exists. ");
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("File not saved");
+                        Console.WriteLine("Not saved.");
                         Console.ResetColor();
                         return false;
-
                     }
                 }
             }
+            
             while (true)
             {
                 try
