@@ -4,16 +4,19 @@
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <criticalBranches>
-    <criticalBranch id="OU-98-7905">
+    <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+      <branch from="1" to="5" order="654" />
       <tsoOrigin>4</tsoOrigin>
     </criticalBranch>
-    <criticalBranch id="OU-54-982">
+    <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+      <branch from="5" to="4" order="534" />
       <tsoOrigin>4</tsoOrigin>
     </criticalBranch>
-    <criticalBranch id="OU-11-8782">
+    <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+      <branch from="8" to="0" order="124" />
       <tsoOrigin>4</tsoOrigin>
     </criticalBranch>
   </criticalBranches>

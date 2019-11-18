@@ -4,8 +4,9 @@
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <criticalBranches>
-    <criticalBranch id="OU-86-4572">
+    <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+      <branch from="7" to="6" order="324" />
       <tsoOrigin>5</tsoOrigin>
     </criticalBranch>
   </criticalBranches>

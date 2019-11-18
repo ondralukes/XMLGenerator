@@ -42,7 +42,7 @@ namespace xmlGenerator
             List<Outage> outages = LoadOutagesFromCSV("outages.csv");
             List<CriticalBranches> criticalBranches = LoadCriticalBranchesFromCSV("criticalBranches.csv");
             List<string> tsoOrigins = new List<string>();
-            foreach (var item in outages)
+            foreach (var item in criticalBranches)
             {
                 if (!tsoOrigins.Contains(item.TsoOrigin)) tsoOrigins.Add(item.TsoOrigin);
             }
@@ -107,21 +107,28 @@ namespace xmlGenerator
 
                 XmlElement criticalBranchesXml = doc.CreateElement("criticalBranches");
                 rootNode.AppendChild(criticalBranchesXml);
-                foreach (var outage in outages)
+                foreach (var criticalBranch in criticalBranches)
                 {
-                    if (outage.TsoOrigin != tsoOrigin) continue;
-                    XmlElement criticalBranch = doc.CreateElement("criticalBranch");
-                    criticalBranch.SetAttribute("id", outage.id);
+                    if (criticalBranch.TsoOrigin != tsoOrigin) continue;
+                    XmlElement criticalBranchElement = doc.CreateElement("criticalBranch");
+
+             
 
                     XmlElement timeIntervalXml = doc.CreateElement("timeInterval");
                     timeIntervalXml.SetAttribute("v", cTimeInterval);
-                    criticalBranch.AppendChild(timeIntervalXml);
+                    criticalBranchElement.AppendChild(timeIntervalXml);
+
+                    XmlElement branchElement = doc.CreateElement("branch");
+                    branchElement.SetAttribute("from", criticalBranch.From);
+                    branchElement.SetAttribute("to", criticalBranch.To);
+                    branchElement.SetAttribute("order", criticalBranch.Order);
+                    criticalBranchElement.AppendChild(branchElement);
 
                     XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
                     tsoOriginElement.InnerText = tsoOrigin;
-                    criticalBranch.AppendChild(tsoOriginElement);
+                    criticalBranchElement.AppendChild(tsoOriginElement);
 
-                    criticalBranchesXml.AppendChild(criticalBranch);
+                    criticalBranchesXml.AppendChild(criticalBranchElement);
                 }
                 Console.WriteLine("Saving...");
                 SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml");
