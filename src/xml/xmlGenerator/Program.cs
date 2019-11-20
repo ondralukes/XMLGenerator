@@ -100,10 +100,10 @@ namespace xmlGenerator
 
                 doc = new XmlDocument();
 
-                rootNode = doc.CreateElement("FlowBasedContingency");
+                rootNode = doc.CreateElement("FlowBasedConstraintDocument");
                 rootNode.SetAttribute("xmnls", "flowbased");
                 rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-1.xsd");
+                rootNode.SetAttribute("xsi:noNamespaceSchemaLocation", "flowbasedconstraintdocument-17.xsd");
 
                 doc.AppendChild(rootNode);
 
