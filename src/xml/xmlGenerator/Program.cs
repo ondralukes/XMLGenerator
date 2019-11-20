@@ -15,6 +15,7 @@ namespace xmlGenerator
         static Random rnd;
         static bool overwriteAll = false;
         static bool dontOverwriteAll = false;
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -48,7 +49,8 @@ namespace xmlGenerator
             {
                 if (!tsoOrigins.Contains(item.TsoOrigin)) tsoOrigins.Add(item.TsoOrigin);
             }
-            
+
+
             /////////////////////////////////////////
             /////// ContingencyDictionary.xml ///////
             /////////////////////////////////////////
@@ -81,7 +83,7 @@ namespace xmlGenerator
                 outagesElement.AppendChild(outage);
             }
             Console.WriteLine("Saving...");
-
+            SaveXML(doc, "ContingencyDictionary.xml");
             #endregion
 
             //////////////////////////////////////////////
@@ -122,7 +124,7 @@ namespace xmlGenerator
                         outage = item;
                         break;
                     }
-                    if(outage == null)
+                    if (outage == null)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("No possible outage!");
@@ -194,12 +196,12 @@ namespace xmlGenerator
 
             if (File.Exists(filename))
             {
-                
+
                 if (!overwriteAll && !dontOverwriteAll)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write($"{filename} already exists. Overwrite? [Y/N, O-Yes for all, K - No for all]: ");
-                    
+
                     Console.ResetColor();
                     while (true)
                     {
@@ -246,7 +248,7 @@ namespace xmlGenerator
                     }
                 }
             }
-            
+
             while (true)
             {
                 try
