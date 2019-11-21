@@ -200,25 +200,25 @@ namespace xmlGenerator
                 if (!overwriteAll && !dontOverwriteAll)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write($"{filename} already exists. Overwrite? [Y/N, O-Yes for all, K - No for all]: ");
-
-                    Console.ResetColor();
+                    Console.Write($"{filename} already exists. Overwrite? : ");
+                    
                     while (true)
                     {
-                        int cursorLeftPos = Console.CursorLeft;
-                        ConsoleKeyInfo key = Console.ReadKey();
-                        Console.SetCursorPosition(cursorLeftPos, Console.CursorTop);
-                        if (key.Key == ConsoleKey.Y || key.Key == ConsoleKey.O)
+                        OverwriteDialog overwriteDialog = new OverwriteDialog(filename);
+                        overwriteDialog.ShowDialog();
+                        Console.ResetColor();
+                        if (!overwriteDialog.inputOk) continue;
+                        if (overwriteDialog.overwrite)
                         {
-                            if (key.Key == ConsoleKey.O) overwriteAll = true;
+                            if (overwriteDialog.forAll) overwriteAll = true;
                             Console.ForegroundColor = ConsoleColor.Green;
                             Console.WriteLine("Overwriting");
                             Console.ResetColor();
                             break;
                         }
-                        else if (key.Key == ConsoleKey.N || key.Key == ConsoleKey.K)
+                        else if (!overwriteDialog.overwrite)
                         {
-                            if (key.Key == ConsoleKey.K) dontOverwriteAll = true;
+                            if (overwriteDialog.forAll) dontOverwriteAll = true;
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("File not saved");
                             Console.ResetColor();
