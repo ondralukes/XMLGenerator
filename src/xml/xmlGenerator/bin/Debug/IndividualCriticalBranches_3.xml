@@ -8,7 +8,7 @@
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="7" to="2" order="35" />
       <tsoOrigin>3</tsoOrigin>
-      <outage id="OU-35-3984" />
+      <outage id="OU-33-4060" />
     </criticalBranch>
   </criticalBranches>
 </FlowBasedConstraintDocument>

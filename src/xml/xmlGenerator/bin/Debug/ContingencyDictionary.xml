@@ -4,43 +4,43 @@
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <outages>
-    <outage id="OU-84-4597">
+    <outage id="OU-60-4420">
       <branch eic="1" elementName="43" from="3" to="8" />
     </outage>
-    <outage id="OU-35-3984">
+    <outage id="OU-33-4060">
       <branch eic="3" elementName="35" from="2" to="7" />
     </outage>
-    <outage id="OU-25-6897">
+    <outage id="OU-20-5930">
       <branch eic="4" elementName="654" from="1" to="5" />
     </outage>
-    <outage id="OU-74-3896">
+    <outage id="OU-79-1101">
       <branch eic="5" elementName="324" from="7" to="6" />
     </outage>
-    <outage id="OU-53-6716">
+    <outage id="OU-71-1052">
       <branch eic="4" elementName="534" from="5" to="4" />
     </outage>
-    <outage id="OU-45-7060">
+    <outage id="OU-95-4631">
       <branch eic="9" elementName="731" from="6" to="3" />
     </outage>
-    <outage id="OU-48-3622">
+    <outage id="OU-43-9347">
       <branch eic="4" elementName="124" from="8" to="0" />
     </outage>
-    <outage id="OU-17-799">
+    <outage id="OU-64-7589">
       <branch eic="12" elementName="25" from="4" to="3" />
     </outage>
-    <outage id="OU-0-4228">
+    <outage id="OU-14-639">
       <branch eic="14" elementName="167" from="5" to="1" />
     </outage>
-    <outage id="OU-80-8846">
+    <outage id="OU-79-2547">
       <branch eic="0" elementName="54" from="9" to="9" />
     </outage>
-    <outage id="OU-50-9572">
+    <outage id="OU-1-3462">
       <branch eic="14" elementName="321" from="3" to="4" />
     </outage>
-    <outage id="OU-78-6575">
+    <outage id="OU-2-4089">
       <branch eic="6" elementName="32" from="4" to="6" />
     </outage>
-    <outage id="OU-97-2042">
+    <outage id="OU-12-1589">
       <branch eic="7" elementName="454" from="0" to="4" />
     </outage>
   </outages>
