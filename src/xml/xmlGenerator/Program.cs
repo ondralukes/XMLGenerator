@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using System.Xml.Schema;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
@@ -58,11 +59,10 @@ namespace xmlGenerator
             #region ContingencyDictionary.xml
             Console.WriteLine("Generating ContingencyDictionary.xml...");
             XmlDocument doc = new XmlDocument();
-
             XmlElement rootNode = doc.CreateElement("FlowBasedContingency");
             rootNode.SetAttribute("xmnls", "flowbased");
             rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-1.xsd");
+            rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-01.xsd");
             doc.AppendChild(rootNode);
 
             WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
@@ -84,7 +84,13 @@ namespace xmlGenerator
                 outagesElement.AppendChild(outage);
             }
             Console.WriteLine("Saving...");
-            SaveXML(doc, "ContingencyDictionary.xml");
+            if(SaveXML(doc, "ContingencyDictionary.xml"))
+            {
+                Console.WriteLine("Validating...");
+                Validator validator = new Validator("ContingencyDictionary.xml");
+                if (!validator.Validate()) return;
+            }
+
             #endregion
 
             //////////////////////////////////////////////
@@ -170,7 +176,11 @@ namespace xmlGenerator
                     }
                 }
                 Console.WriteLine("Saving...");
-                SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml");
+                if (SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml")){
+                    Console.WriteLine("Validating...");
+                    Validator validator = new Validator($"IndividualCriticalBranches_{tsoOrigin}.xml");
+                    if(!validator.Validate())return;
+                }
             }
             #endregion
             Console.WriteLine("Press O to open location or any other key to close");
@@ -189,6 +199,7 @@ namespace xmlGenerator
             }
 
         }
+        
         static void WriteHeader(XmlElement rootNode, string cTimeInterval, string sIdentification, string rIdentification)
         {
             XmlDocument doc = rootNode.OwnerDocument;

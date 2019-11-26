@@ -41,5 +41,10 @@ namespace xmlGenerator
         {
 
         }
+
+        private void InputPrompt_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = !inputOK;
+        }
     }
 }

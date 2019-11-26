@@ -15,3 +15,4 @@ C:\Users\Ondra\source\XMLGenerator\src\xml\xmlGenerator\obj\Debug\xmlGenerator.p
 C:\Users\Ondra\source\XMLGenerator\src\xml\xmlGenerator\obj\Debug\xmlGenerator.InputPrompt.resources
 C:\Users\Ondra\source\XMLGenerator\src\xml\xmlGenerator\obj\Debug\xmlGenerator.csproj.GenerateResource.cache
 C:\Users\Ondra\source\XMLGenerator\src\xml\xmlGenerator\obj\Debug\xmlGenerator.OverwriteDialog.resources
+C:\Users\Ondra\source\XMLGenerator\src\xml\xmlGenerator\obj\Debug\xmlGenerator.ValidationResultForm.resources
