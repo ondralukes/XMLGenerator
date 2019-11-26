@@ -19,12 +19,14 @@ namespace xmlGenerator
         {
             filename = _filename;
         }
+        public static bool ignoreWarnings = false;
         private int validationWarnings = 0;
         private int validationErrors = 0;
         private List<SuperXmlSchemaException> xmlExceptions = new List<SuperXmlSchemaException>();
         public bool Validate()
         {
             Validator.ValidationResult validationResult = ValidateCore();
+            ValidationResultForm validationResultForm;
             switch (validationResult)
             {
                 case Validator.ValidationResult.OK:
@@ -33,9 +35,15 @@ namespace xmlGenerator
                 case Validator.ValidationResult.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write($"Validation finished with {validationWarnings} warnings. Continue? ");
-                    ValidationResultForm validationResultForm = new ValidationResultForm(xmlExceptions,true);
-                    validationResultForm.ShowDialog();
-                    if (validationResultForm.stop)
+                    bool stop=false;
+                    if (!ignoreWarnings)
+                    {
+                        validationResultForm = new ValidationResultForm(xmlExceptions, true);
+                        validationResultForm.ShowDialog();
+                        stop = validationResultForm.stop;
+                        ignoreWarnings = validationResultForm.ignoreWarnings;
+                    }
+                    if (stop)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("No.");
@@ -46,7 +54,7 @@ namespace xmlGenerator
                         Console.WriteLine("Yes.");
                         Console.ResetColor();
                     }
-                    return !validationResultForm.stop;
+                    return !stop;
                     break;
                 case Validator.ValidationResult.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
