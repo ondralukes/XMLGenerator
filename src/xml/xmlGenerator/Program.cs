@@ -112,10 +112,13 @@ namespace xmlGenerator
 
                 XmlElement criticalBranchesXml = doc.CreateElement("criticalBranches");
                 rootNode.AppendChild(criticalBranchesXml);
+
+                
                 foreach (var criticalBranch in criticalBranches)
                 {
+                    int outagesCount = rnd.Next(outagesPerBranch) + 1;
                     if (criticalBranch.TsoOrigin != tsoOrigin) continue;
-                    for (int i = 0; i < outagesPerBranch; i++)
+                    for (int i = 0; i < outagesCount; i++)
                     {
                         Outage outage = null;
 

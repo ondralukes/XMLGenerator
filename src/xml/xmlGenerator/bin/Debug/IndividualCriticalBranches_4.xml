@@ -8,37 +8,19 @@
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="4" to="1" order="654" />
       <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-11-5888" />
-    </criticalBranch>
-    <criticalBranch>
-      <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="4" to="1" order="654" />
-      <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-55-3517" />
+      <outage id="OU-37-4536" />
     </criticalBranch>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="4" to="5" order="534" />
       <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-55-3517" />
-    </criticalBranch>
-    <criticalBranch>
-      <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="4" to="5" order="534" />
-      <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-78-134" />
+      <outage id="OU-23-8427" />
     </criticalBranch>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="7" to="8" order="124" />
       <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-11-5888" />
-    </criticalBranch>
-    <criticalBranch>
-      <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="7" to="8" order="124" />
-      <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-55-3517" />
+      <outage id="OU-37-4536" />
     </criticalBranch>
   </criticalBranches>
 </FlowBasedConstraintDocument>
