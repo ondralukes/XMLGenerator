@@ -87,7 +87,7 @@ namespace xmlGenerator
             if(SaveXML(doc, "ContingencyDictionary.xml"))
             {
                 Console.WriteLine("Validating...");
-                Validator validator = new Validator("ContingencyDictionary.xml");
+                Validator validator = new Validator("ContingencyDictionary.xml", "flowbasedcontingency-01.xsd");
                 if (!validator.Validate()) return;
             }
 
@@ -178,8 +178,8 @@ namespace xmlGenerator
                 Console.WriteLine("Saving...");
                 if (SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml")){
                     Console.WriteLine("Validating...");
-                    Validator validator = new Validator($"IndividualCriticalBranches_{tsoOrigin}.xml");
-                    if(!validator.Validate())return;
+                    Validator validator = new Validator($"IndividualCriticalBranches_{tsoOrigin}.xml", "flowbasedconstraintdocument-17.xsd");
+                    if (!validator.Validate())return;
                 }
             }
             #endregion

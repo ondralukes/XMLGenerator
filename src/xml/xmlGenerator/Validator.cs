@@ -12,12 +12,14 @@ namespace xmlGenerator
     {
         public enum ValidationResult
         {
-            OK, Warning, Error
+            OK, Warning, Error,Failed
         }
         string filename;
-        public Validator(string _filename)
+        string xsdLocation;
+        public Validator(string _filename,string _xsdLocation)
         {
             filename = _filename;
+            xsdLocation = _xsdLocation;
         }
         public static bool ignoreWarnings = false;
         private int validationWarnings = 0;
@@ -58,9 +60,16 @@ namespace xmlGenerator
                     break;
                 case Validator.ValidationResult.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Validation failed!");
+                    Console.WriteLine("Validation finished with errors!");
                     validationResultForm = new ValidationResultForm(xmlExceptions, false);
                     validationResultForm.ShowDialog();
+                    return false;
+                    break;
+                case ValidationResult.Failed:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Validation failed!");
+                    Console.WriteLine("Press Enter to exit");
+                    Console.ReadLine();
                     return false;
                     break;
             }
@@ -75,7 +84,19 @@ namespace xmlGenerator
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
             readerSettings.ValidationEventHandler += new ValidationEventHandler(onValidation);
             readerSettings.ValidationType = ValidationType.Schema;
-            XmlReader xmlReader = XmlReader.Create("ContingencyDictionary.xml", readerSettings);
+            readerSettings.Schemas.Add("flowbased", xsdLocation);
+            XmlReader xmlReader;
+            try
+            {
+                xmlReader = XmlReader.Create("ContingencyDictionary.xml", readerSettings);
+            } catch (XmlSchemaValidationException e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"[Validator] failed to validate {e.Message}");
+                Console.ResetColor();
+                return ValidationResult.Failed;
+            }
+            
             while (xmlReader.Read()) ;
             xmlReader.Close();
             if (validationWarnings == 0 && validationErrors == 0) return ValidationResult.OK;
