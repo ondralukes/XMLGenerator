@@ -68,9 +68,9 @@ namespace xmlGenerator
                 case ValidationResult.Failed:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Validation failed!");
-                    Console.WriteLine("Press Enter to exit");
-                    Console.ReadLine();
-                    return false;
+                    Console.WriteLine("Continuing without validation");
+                    Console.ResetColor();
+                    return true;
                     break;
             }
             return true;
@@ -84,15 +84,17 @@ namespace xmlGenerator
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
             readerSettings.ValidationEventHandler += new ValidationEventHandler(onValidation);
             readerSettings.ValidationType = ValidationType.Schema;
-            readerSettings.Schemas.Add("flowbased", xsdLocation);
             XmlReader xmlReader;
             try
             {
+                readerSettings.Schemas.Add("flowbased", xsdLocation);
+            
+            
                 xmlReader = XmlReader.Create("ContingencyDictionary.xml", readerSettings);
-            } catch (XmlSchemaValidationException e)
+            } catch (Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"[Validator] failed to validate {e.Message}");
+                Console.WriteLine($"[Validator] Validation failed: {e.Message}");
                 Console.ResetColor();
                 return ValidationResult.Failed;
             }
