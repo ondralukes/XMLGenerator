@@ -15,6 +15,7 @@ namespace xmlGenerator
     {
         private bool inputOK = false;
         public bool stop = false;
+        public bool ignoreWarnings = false;
         private List<SuperXmlSchemaException> xmlExceptions;
         public ValidationResultForm(List<SuperXmlSchemaException> _xmlExceptions,bool allowContinue)
         {
@@ -28,6 +29,7 @@ namespace xmlGenerator
             exceptionList.Columns.Add(header);
             exceptionList.Items.Clear();
             continueBtn.Enabled = allowContinue;
+            ignoreWarningsBtn.Enabled = allowContinue;
             foreach (var exception in xmlExceptions)
             {
                 ListViewItem item = new ListViewItem($"At line {exception.exception.LineNumber}: {exception.exception.Message}");
@@ -68,6 +70,7 @@ namespace xmlGenerator
         {
             stop = false;
             inputOK = true;
+            ignoreWarnings = ignoreWarningsBtn.Checked;
             Close();
         }
 
@@ -75,6 +78,7 @@ namespace xmlGenerator
         {
             stop = true;
             inputOK = true;
+            
             Close();
         }
     }

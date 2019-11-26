@@ -32,6 +32,7 @@
             this.continueBtn = new System.Windows.Forms.Button();
             this.stopBtn = new System.Windows.Forms.Button();
             this.exceptionList = new System.Windows.Forms.ListView();
+            this.ignoreWarningsBtn = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // exceptionText
@@ -75,11 +76,22 @@
             this.exceptionList.View = System.Windows.Forms.View.Details;
             this.exceptionList.SelectedIndexChanged += new System.EventHandler(this.ExceptionList_SelectedIndexChanged);
             // 
+            // ignoreWarningsBtn
+            // 
+            this.ignoreWarningsBtn.AutoSize = true;
+            this.ignoreWarningsBtn.Location = new System.Drawing.Point(266, 398);
+            this.ignoreWarningsBtn.Name = "ignoreWarningsBtn";
+            this.ignoreWarningsBtn.Size = new System.Drawing.Size(130, 21);
+            this.ignoreWarningsBtn.TabIndex = 5;
+            this.ignoreWarningsBtn.Text = "Ignore warnings";
+            this.ignoreWarningsBtn.UseVisualStyleBackColor = true;
+            // 
             // ValidationResultForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ignoreWarningsBtn);
             this.Controls.Add(this.exceptionList);
             this.Controls.Add(this.stopBtn);
             this.Controls.Add(this.continueBtn);
@@ -101,5 +113,6 @@
         private System.Windows.Forms.Button continueBtn;
         private System.Windows.Forms.Button stopBtn;
         private System.Windows.Forms.ListView exceptionList;
+        private System.Windows.Forms.CheckBox ignoreWarningsBtn;
     }
 }
