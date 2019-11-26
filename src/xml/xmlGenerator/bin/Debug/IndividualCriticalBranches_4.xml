@@ -6,21 +6,21 @@
   <criticalBranches>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="5" to="1" order="654" />
+      <branch from="4" to="1" order="654" />
       <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-20-5930" />
+      <outage id="OU-52-2779" />
     </criticalBranch>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="4" to="5" order="534" />
       <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-71-1052" />
+      <outage id="OU-52-9454" />
     </criticalBranch>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="0" to="8" order="124" />
+      <branch from="7" to="8" order="124" />
       <tsoOrigin>4</tsoOrigin>
-      <outage id="OU-20-5930" />
+      <outage id="OU-52-2779" />
     </criticalBranch>
   </criticalBranches>
 </FlowBasedConstraintDocument>

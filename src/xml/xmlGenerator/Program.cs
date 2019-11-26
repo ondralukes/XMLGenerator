@@ -41,6 +41,7 @@ namespace xmlGenerator
             string cTimeInterval = prompt.constraintTimeInterval;
             string sIdentification = prompt.senderIndentification;
             string rIdentification = prompt.receiverIndentification;
+            int outagesPerBranch = prompt.outagesPerBranch;
 
             List<Outage> outages = LoadOutagesFromCSV("outages.csv");
             List<CriticalBranches> criticalBranches = LoadCriticalBranchesFromCSV("criticalBranches.csv");
@@ -114,7 +115,7 @@ namespace xmlGenerator
                 foreach (var criticalBranch in criticalBranches)
                 {
                     if (criticalBranch.TsoOrigin != tsoOrigin) continue;
-
+                    
                     Outage outage = null;
                     foreach (var item in outages)
                     {
