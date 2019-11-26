@@ -115,9 +115,19 @@
             // outagesCountUpDown
             // 
             this.outagesCountUpDown.Location = new System.Drawing.Point(180, 95);
+            this.outagesCountUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.outagesCountUpDown.Name = "outagesCountUpDown";
             this.outagesCountUpDown.Size = new System.Drawing.Size(120, 22);
             this.outagesCountUpDown.TabIndex = 8;
+            this.outagesCountUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // InputPrompt
             // 
