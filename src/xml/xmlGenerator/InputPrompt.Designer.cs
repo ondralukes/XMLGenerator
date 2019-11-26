@@ -148,6 +148,7 @@
             this.MinimizeBox = false;
             this.Name = "InputPrompt";
             this.Text = "InputPrompt";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InputPrompt_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.outagesCountUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

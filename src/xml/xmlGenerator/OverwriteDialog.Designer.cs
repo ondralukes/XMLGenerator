@@ -99,6 +99,7 @@
             this.MinimizeBox = false;
             this.Name = "OverwriteDialog";
             this.Text = "OverwriteDialog";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OverwriteDialog_FormClosing);
             this.ResumeLayout(false);
 
         }

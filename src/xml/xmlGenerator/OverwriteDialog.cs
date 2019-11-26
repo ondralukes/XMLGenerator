@@ -54,5 +54,10 @@ namespace xmlGenerator
             inputOk = true;
             Close();
         }
+
+        private void OverwriteDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = !inputOk;
+        }
     }
 }
