@@ -170,7 +170,16 @@ namespace xmlGenerator
 
                         XmlElement outageElement = doc.CreateElement("outage");
                         outageElement.SetAttribute("id", outage.id);
+
                         criticalBranchElement.AppendChild(outageElement);
+
+                        foreach (var item in criticalBranch.details)
+                        {
+                            XmlElement detailXml = doc.CreateElement(item.Key);
+                            detailXml.InnerText = item.Value;
+                            criticalBranchElement.AppendChild(detailXml);
+                        }
+                        
 
                         criticalBranchesXml.AppendChild(criticalBranchElement);
                     }
@@ -341,17 +350,39 @@ namespace xmlGenerator
             StreamReader streamReader = new StreamReader(filename);
 
             //Skip header
-            streamReader.ReadLine();
+            string[] keys = streamReader.ReadLine().Split(';');
             List<CriticalBranches> items = new List<CriticalBranches>();
             while (!streamReader.EndOfStream)
             {
                 string line = streamReader.ReadLine();
                 string[] strValues = line.Split(';');
                 CriticalBranches item = new CriticalBranches();
-                item.From = strValues[0];
-                item.To = strValues[1];
-                item.Order = strValues[2];
-                item.TsoOrigin = strValues[3];
+                for(int i = 0; i < keys.Length; i++)
+                {
+                    if (strValues.Length <= i) break;
+                    switch (keys[i])
+                    {
+                        case "from":
+                            item.From = strValues[i];
+                            break;
+                        case "to":
+                            item.To = strValues[i];
+                            break;
+                        case "order":
+                            item.Order = strValues[i];
+                            break;
+                        case "tsoOrigin":
+                            item.TsoOrigin = strValues[i];
+                            break;
+                        default:
+                            if (keys[i] != "")
+                            {
+                                item.details.Add(new KeyValuePair<string, string>(keys[i], strValues[i]));
+                            }
+
+                            break;
+                    }
+                }
                 items.Add(item);
             }
             Console.WriteLine($"Loaded {items.Count} critical branches");
@@ -372,6 +403,7 @@ namespace xmlGenerator
             public string To;
             public string Order;
             public string TsoOrigin;
+            public List<KeyValuePair<string, string>> details = new List<KeyValuePair<string, string>>();
         }
     }
 }
