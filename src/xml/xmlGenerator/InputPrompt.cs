@@ -15,6 +15,7 @@ namespace xmlGenerator
         public string constraintTimeInterval;
         public string senderIndentification;
         public string receiverIndentification;
+        public int outagesPerBranch = 0;
         public bool inputOK = false;
         public InputPrompt()
         {
@@ -31,6 +32,7 @@ namespace xmlGenerator
             constraintTimeInterval = cTimeIntTextBox.Text;
             senderIndentification = SIndentificationTextBox.Text;
             receiverIndentification = RIndentificationTextBox.Text;
+            outagesPerBranch = (int)outagesCountUpDown.Value;
             inputOK = true;
             this.Close();
         }

@@ -35,6 +35,9 @@
             this.RIndentificationTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.okBtn = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.outagesCountUpDown = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.outagesCountUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -92,7 +95,7 @@
             // 
             // okBtn
             // 
-            this.okBtn.Location = new System.Drawing.Point(15, 96);
+            this.okBtn.Location = new System.Drawing.Point(16, 123);
             this.okBtn.Name = "okBtn";
             this.okBtn.Size = new System.Drawing.Size(540, 29);
             this.okBtn.TabIndex = 6;
@@ -100,11 +103,29 @@
             this.okBtn.UseVisualStyleBackColor = true;
             this.okBtn.Click += new System.EventHandler(this.OkBtn_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 97);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(135, 17);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Outages per branch";
+            // 
+            // outagesCountUpDown
+            // 
+            this.outagesCountUpDown.Location = new System.Drawing.Point(180, 95);
+            this.outagesCountUpDown.Name = "outagesCountUpDown";
+            this.outagesCountUpDown.Size = new System.Drawing.Size(120, 22);
+            this.outagesCountUpDown.TabIndex = 8;
+            // 
             // InputPrompt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 138);
+            this.ClientSize = new System.Drawing.Size(567, 161);
+            this.Controls.Add(this.outagesCountUpDown);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.RIndentificationTextBox);
@@ -117,6 +138,7 @@
             this.MinimizeBox = false;
             this.Name = "InputPrompt";
             this.Text = "InputPrompt";
+            ((System.ComponentModel.ISupportInitialize)(this.outagesCountUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,5 +153,7 @@
         private System.Windows.Forms.TextBox RIndentificationTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button okBtn;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown outagesCountUpDown;
     }
 }

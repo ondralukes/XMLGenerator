@@ -6,9 +6,15 @@
   <criticalBranches>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="8" to="3" order="43" />
+      <branch from="1" to="3" order="43" />
       <tsoOrigin>1</tsoOrigin>
-      <outage id="OU-60-4420" />
+      <outage id="OU-71-8451" />
+    </criticalBranch>
+    <criticalBranch>
+      <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+      <branch from="1" to="3" order="43" />
+      <tsoOrigin>1</tsoOrigin>
+      <outage id="OU-7-1473" />
     </criticalBranch>
   </criticalBranches>
 </FlowBasedConstraintDocument>
