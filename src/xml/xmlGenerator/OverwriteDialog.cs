@@ -27,7 +27,7 @@ namespace xmlGenerator
         {
             overwrite = true;
             forAll = false;
-            inputOk = true; 
+            inputOk = true;
             Close();
         }
 

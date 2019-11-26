@@ -113,7 +113,7 @@ namespace xmlGenerator
                 XmlElement criticalBranchesXml = doc.CreateElement("criticalBranches");
                 rootNode.AppendChild(criticalBranchesXml);
 
-                
+
                 foreach (var criticalBranch in criticalBranches)
                 {
                     int outagesCount = rnd.Next(outagesPerBranch) + 1;
@@ -216,7 +216,7 @@ namespace xmlGenerator
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write($"{filename} already exists. Overwrite? : ");
-                    
+
                     while (true)
                     {
                         OverwriteDialog overwriteDialog = new OverwriteDialog(filename);
