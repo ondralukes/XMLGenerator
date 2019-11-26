@@ -4,44 +4,200 @@
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <outages>
-    <outage id="OU-26-5720">
+    <outage id="OU-13-2181">
       <branch eic="1" elementName="43" from="3" to="8" />
     </outage>
-    <outage id="OU-57-7311">
+    <outage id="OU-46-2547">
       <branch eic="3" elementName="35" from="2" to="7" />
     </outage>
-    <outage id="OU-52-2779">
+    <outage id="OU-11-5888">
       <branch eic="4" elementName="654" from="1" to="5" />
     </outage>
-    <outage id="OU-55-2505">
+    <outage id="OU-22-2254">
       <branch eic="5" elementName="324" from="7" to="6" />
     </outage>
-    <outage id="OU-52-9454">
+    <outage id="OU-55-3517">
       <branch eic="4" elementName="534" from="5" to="4" />
     </outage>
-    <outage id="OU-96-6096">
+    <outage id="OU-16-4717">
       <branch eic="9" elementName="731" from="6" to="3" />
     </outage>
-    <outage id="OU-38-4766">
+    <outage id="OU-78-134">
       <branch eic="4" elementName="124" from="8" to="0" />
     </outage>
-    <outage id="OU-74-1537">
+    <outage id="OU-47-911">
       <branch eic="12" elementName="25" from="4" to="3" />
     </outage>
-    <outage id="OU-33-3294">
+    <outage id="OU-36-9618">
       <branch eic="14" elementName="167" from="5" to="1" />
     </outage>
-    <outage id="OU-89-2090">
+    <outage id="OU-91-5044">
       <branch eic="0" elementName="54" from="9" to="9" />
     </outage>
-    <outage id="OU-10-671">
+    <outage id="OU-26-3659">
       <branch eic="14" elementName="321" from="3" to="4" />
     </outage>
-    <outage id="OU-38-3584">
+    <outage id="OU-33-2693">
       <branch eic="6" elementName="32" from="4" to="6" />
     </outage>
-    <outage id="OU-90-525">
+    <outage id="OU-11-3635">
       <branch eic="7" elementName="454" from="0" to="4" />
+    </outage>
+    <outage id="OU-65-1813">
+      <branch eic="10" elementName="754" from="8" to="3" />
+    </outage>
+    <outage id="OU-69-1232">
+      <branch eic="3" elementName="375" from="7" to="0" />
+    </outage>
+    <outage id="OU-81-1937">
+      <branch eic="4" elementName="499" from="0" to="6" />
+    </outage>
+    <outage id="OU-96-6259">
+      <branch eic="1" elementName="639" from="8" to="3" />
+    </outage>
+    <outage id="OU-68-9000">
+      <branch eic="2" elementName="662" from="2" to="0" />
+    </outage>
+    <outage id="OU-24-44">
+      <branch eic="2" elementName="830" from="1" to="4" />
+    </outage>
+    <outage id="OU-23-8634">
+      <branch eic="12" elementName="961" from="3" to="6" />
+    </outage>
+    <outage id="OU-65-6943">
+      <branch eic="6" elementName="245" from="8" to="7" />
+    </outage>
+    <outage id="OU-96-612">
+      <branch eic="7" elementName="606" from="3" to="1" />
+    </outage>
+    <outage id="OU-96-6582">
+      <branch eic="4" elementName="184" from="9" to="0" />
+    </outage>
+    <outage id="OU-55-6215">
+      <branch eic="4" elementName="151" from="9" to="6" />
+    </outage>
+    <outage id="OU-13-3204">
+      <branch eic="11" elementName="342" from="4" to="10" />
+    </outage>
+    <outage id="OU-67-5831">
+      <branch eic="2" elementName="791" from="10" to="2" />
+    </outage>
+    <outage id="OU-29-2726">
+      <branch eic="14" elementName="968" from="7" to="1" />
+    </outage>
+    <outage id="OU-74-7653">
+      <branch eic="0" elementName="272" from="6" to="10" />
+    </outage>
+    <outage id="OU-87-2004">
+      <branch eic="14" elementName="948" from="5" to="9" />
+    </outage>
+    <outage id="OU-13-7511">
+      <branch eic="7" elementName="968" from="3" to="0" />
+    </outage>
+    <outage id="OU-93-485">
+      <branch eic="12" elementName="827" from="9" to="10" />
+    </outage>
+    <outage id="OU-53-4272">
+      <branch eic="6" elementName="653" from="0" to="7" />
+    </outage>
+    <outage id="OU-53-9698">
+      <branch eic="3" elementName="742" from="3" to="3" />
+    </outage>
+    <outage id="OU-50-1608">
+      <branch eic="11" elementName="40" from="0" to="9" />
+    </outage>
+    <outage id="OU-33-5706">
+      <branch eic="11" elementName="107" from="10" to="10" />
+    </outage>
+    <outage id="OU-84-3592">
+      <branch eic="5" elementName="441" from="4" to="5" />
+    </outage>
+    <outage id="OU-72-561">
+      <branch eic="0" elementName="284" from="6" to="6" />
+    </outage>
+    <outage id="OU-84-5711">
+      <branch eic="6" elementName="691" from="4" to="8" />
+    </outage>
+    <outage id="OU-40-2783">
+      <branch eic="14" elementName="530" from="3" to="0" />
+    </outage>
+    <outage id="OU-30-4587">
+      <branch eic="1" elementName="461" from="7" to="6" />
+    </outage>
+    <outage id="OU-80-286">
+      <branch eic="1" elementName="836" from="2" to="4" />
+    </outage>
+    <outage id="OU-4-3727">
+      <branch eic="14" elementName="114" from="9" to="9" />
+    </outage>
+    <outage id="OU-44-2366">
+      <branch eic="7" elementName="409" from="0" to="3" />
+    </outage>
+    <outage id="OU-89-6904">
+      <branch eic="10" elementName="231" from="2" to="7" />
+    </outage>
+    <outage id="OU-87-9178">
+      <branch eic="11" elementName="42" from="0" to="0" />
+    </outage>
+    <outage id="OU-2-409">
+      <branch eic="10" elementName="818" from="8" to="2" />
+    </outage>
+    <outage id="OU-86-4853">
+      <branch eic="12" elementName="753" from="3" to="0" />
+    </outage>
+    <outage id="OU-92-6063">
+      <branch eic="4" elementName="881" from="1" to="8" />
+    </outage>
+    <outage id="OU-16-5337">
+      <branch eic="7" elementName="678" from="8" to="4" />
+    </outage>
+    <outage id="OU-52-9920">
+      <branch eic="10" elementName="80" from="10" to="2" />
+    </outage>
+    <outage id="OU-14-3929">
+      <branch eic="14" elementName="795" from="1" to="0" />
+    </outage>
+    <outage id="OU-29-5635">
+      <branch eic="8" elementName="82" from="2" to="5" />
+    </outage>
+    <outage id="OU-47-3163">
+      <branch eic="14" elementName="879" from="7" to="4" />
+    </outage>
+    <outage id="OU-85-2419">
+      <branch eic="10" elementName="983" from="1" to="1" />
+    </outage>
+    <outage id="OU-42-1757">
+      <branch eic="12" elementName="680" from="0" to="10" />
+    </outage>
+    <outage id="OU-36-6002">
+      <branch eic="6" elementName="874" from="9" to="0" />
+    </outage>
+    <outage id="OU-89-6791">
+      <branch eic="2" elementName="318" from="10" to="6" />
+    </outage>
+    <outage id="OU-94-9100">
+      <branch eic="12" elementName="848" from="0" to="6" />
+    </outage>
+    <outage id="OU-0-1594">
+      <branch eic="9" elementName="622" from="4" to="3" />
+    </outage>
+    <outage id="OU-97-2952">
+      <branch eic="3" elementName="612" from="10" to="3" />
+    </outage>
+    <outage id="OU-7-8181">
+      <branch eic="9" elementName="602" from="1" to="3" />
+    </outage>
+    <outage id="OU-28-4124">
+      <branch eic="1" elementName="484" from="3" to="0" />
+    </outage>
+    <outage id="OU-54-8088">
+      <branch eic="14" elementName="603" from="10" to="0" />
+    </outage>
+    <outage id="OU-49-2400">
+      <branch eic="4" elementName="860" from="0" to="4" />
+    </outage>
+    <outage id="OU-13-2432">
+      <branch eic="7" elementName="195" from="2" to="9" />
     </outage>
   </outages>
 </FlowBasedContingency>

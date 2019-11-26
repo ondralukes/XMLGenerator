@@ -115,45 +115,56 @@ namespace xmlGenerator
                 foreach (var criticalBranch in criticalBranches)
                 {
                     if (criticalBranch.TsoOrigin != tsoOrigin) continue;
-                    
-                    Outage outage = null;
-                    foreach (var item in outages)
+                    for (int i = 0; i < outagesPerBranch; i++)
                     {
-                        if (item.TsoOrigin != criticalBranch.TsoOrigin) continue;
-                        if (item.From == criticalBranch.From) continue;
-                        if (item.To == criticalBranch.To) continue;
-                        outage = item;
-                        break;
+                        Outage outage = null;
+
+                        int skippedOutages = 0;
+                        foreach (var item in outages)
+                        {
+                            if (item.TsoOrigin != criticalBranch.TsoOrigin) continue;
+                            if (item.From == criticalBranch.From) continue;
+                            if (item.To == criticalBranch.To) continue;
+                            if (skippedOutages != i)
+                            {
+                                skippedOutages++;
+                            }
+                            else
+                            {
+                                outage = item;
+                                break;
+                            }
+                        }
+                        if (outage == null)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("No possible outage!");
+                            Console.WriteLine("Press Enter to exit");
+                            Console.ReadLine();
+                            return;
+                        }
+                        XmlElement criticalBranchElement = doc.CreateElement("criticalBranch");
+
+                        XmlElement timeIntervalXml = doc.CreateElement("timeInterval");
+                        timeIntervalXml.SetAttribute("v", cTimeInterval);
+                        criticalBranchElement.AppendChild(timeIntervalXml);
+
+                        XmlElement branchElement = doc.CreateElement("branch");
+                        branchElement.SetAttribute("from", criticalBranch.From);
+                        branchElement.SetAttribute("to", criticalBranch.To);
+                        branchElement.SetAttribute("order", criticalBranch.Order);
+                        criticalBranchElement.AppendChild(branchElement);
+
+                        XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
+                        tsoOriginElement.InnerText = tsoOrigin;
+                        criticalBranchElement.AppendChild(tsoOriginElement);
+
+                        XmlElement outageElement = doc.CreateElement("outage");
+                        outageElement.SetAttribute("id", outage.id);
+                        criticalBranchElement.AppendChild(outageElement);
+
+                        criticalBranchesXml.AppendChild(criticalBranchElement);
                     }
-                    if (outage == null)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("No possible outage!");
-                        Console.WriteLine("Press Enter to exit");
-                        Console.ReadLine();
-                        return;
-                    }
-                    XmlElement criticalBranchElement = doc.CreateElement("criticalBranch");
-
-                    XmlElement timeIntervalXml = doc.CreateElement("timeInterval");
-                    timeIntervalXml.SetAttribute("v", cTimeInterval);
-                    criticalBranchElement.AppendChild(timeIntervalXml);
-
-                    XmlElement branchElement = doc.CreateElement("branch");
-                    branchElement.SetAttribute("from", criticalBranch.From);
-                    branchElement.SetAttribute("to", criticalBranch.To);
-                    branchElement.SetAttribute("order", criticalBranch.Order);
-                    criticalBranchElement.AppendChild(branchElement);
-
-                    XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
-                    tsoOriginElement.InnerText = tsoOrigin;
-                    criticalBranchElement.AppendChild(tsoOriginElement);
-
-                    XmlElement outageElement = doc.CreateElement("outage");
-                    outageElement.SetAttribute("id", outage.id);
-                    criticalBranchElement.AppendChild(outageElement);
-
-                    criticalBranchesXml.AppendChild(criticalBranchElement);
                 }
                 Console.WriteLine("Saving...");
                 SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml");
