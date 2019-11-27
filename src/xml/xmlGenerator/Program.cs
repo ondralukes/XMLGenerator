@@ -60,7 +60,7 @@ namespace xmlGenerator
             Console.WriteLine("Generating ContingencyDictionary.xml...");
             XmlDocument doc = new XmlDocument();
             XmlElement rootNode = doc.CreateElement("FlowBasedContingency");
-            rootNode.SetAttribute("xmnls", "flowbased");
+            rootNode.SetAttribute("xmlns", "flowbased");
             rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-01.xsd");
             doc.AppendChild(rootNode);
@@ -84,7 +84,7 @@ namespace xmlGenerator
                 outagesElement.AppendChild(outage);
             }
             Console.WriteLine("Saving...");
-            if(SaveXML(doc, "ContingencyDictionary.xml"))
+            if(SaveXML(doc, "ContingencyDictionary.xml")||true)
             {
                 Console.WriteLine("Validating...");
                 Validator validator = new Validator("ContingencyDictionary.xml", "flowbasedcontingency-01.xsd");
@@ -108,7 +108,7 @@ namespace xmlGenerator
                 doc = new XmlDocument();
 
                 rootNode = doc.CreateElement("FlowBasedConstraintDocument");
-                rootNode.SetAttribute("xmnls", "flowbased");
+                rootNode.SetAttribute("xmlns", "flowbased");
                 rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
                 rootNode.SetAttribute("xsi:noNamespaceSchemaLocation", "flowbasedconstraintdocument-17.xsd");
 

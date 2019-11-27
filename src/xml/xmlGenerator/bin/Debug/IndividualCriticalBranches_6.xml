@@ -8,8 +8,9 @@
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="0" to="4" order="32" />
       <tsoOrigin>6</tsoOrigin>
-      <outage id="OU-24-1891" />
+      <outage id="OU-94-7516" />
       <test>xd</test>
+      <CNEC>FALSE</CNEC>
     </criticalBranch>
   </criticalBranches>
 </FlowBasedConstraintDocument>

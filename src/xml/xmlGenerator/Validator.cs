@@ -82,6 +82,7 @@ namespace xmlGenerator
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessInlineSchema;
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
+            readerSettings.ValidationFlags |= XmlSchemaValidationFlags.AllowXmlAttributes;
             readerSettings.ValidationEventHandler += new ValidationEventHandler(onValidation);
             readerSettings.ValidationType = ValidationType.Schema;
             XmlReader xmlReader;
