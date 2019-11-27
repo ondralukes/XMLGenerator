@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FlowBasedConstraintDocument xmnls="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="flowbasedconstraintdocument-17.xsd">
+<FlowBasedConstraintDocument xmlns="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="flowbasedconstraintdocument-17.xsd">
   <ServerIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
@@ -8,7 +8,7 @@
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="1" to="3" order="43" />
       <tsoOrigin>1</tsoOrigin>
-      <outage id="OU-51-2975" />
+      <outage id="OU-48-203" />
       <test>test</test>
       <CNEC>TRUE</CNEC>
     </criticalBranch>
