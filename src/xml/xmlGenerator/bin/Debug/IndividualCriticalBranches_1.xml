@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FlowBasedConstraintDocument xmlns="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="flowbasedconstraintdocument-17.xsd">
-  <ServerIdentification codingScheme="A01" v="17XTSO-CS------W" />
+  <DocumentIdentification v="1" />
+  <DocumentVersion v="1" />
+  <DocumentType v="B06" />
+  <ProcessType v="A06" />
+  <SenderIdentification codingScheme="A01" v="17XTSO-CS------W" />
+  <SenderRole v="A36" />
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
-  <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+  <ReceiverRole v="A36" />
+  <CreationDateTime v="2019-11-28T08:12:19Z" />
+  <ContingencyTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+  <Domain v="10YDOM-REGION-1V" codingScheme="A01" />
   <criticalBranches>
     <criticalBranch>
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
       <branch from="1" to="3" order="43" />
       <tsoOrigin>1</tsoOrigin>
-      <outage id="OU-48-203" />
+      <outage id="OU-86-2868" />
       <test>test</test>
       <CNEC>TRUE</CNEC>
     </criticalBranch>

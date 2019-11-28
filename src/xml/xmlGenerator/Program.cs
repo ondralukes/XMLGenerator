@@ -167,7 +167,7 @@ namespace xmlGenerator
                         criticalBranchElement.AppendChild(timeIntervalXml);
 
                         XmlElement branchElement = doc.CreateElement("branch");
-                        branchElement.SetAttribute("from", criticalBranch.From);
+                        branchElement.SetAttribute("from",criticalBranch.From);
                         branchElement.SetAttribute("to", criticalBranch.To);
                         branchElement.SetAttribute("order", criticalBranch.Order);
                         criticalBranchElement.AppendChild(branchElement);
