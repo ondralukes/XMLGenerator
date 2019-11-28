@@ -60,12 +60,19 @@ namespace xmlGenerator
             Console.WriteLine("Generating ContingencyDictionary.xml...");
             XmlDocument doc = new XmlDocument();
             XmlElement rootNode = doc.CreateElement("FlowBasedContingency");
+            rootNode.SetAttribute("DtdRelease", "4");
+            rootNode.SetAttribute("DtdVersion", "0");
             rootNode.SetAttribute("xmlns", "flowbased");
             rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-01.xsd");
+            
+            //rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-01.xsd");
+            XmlAttribute attr = doc.CreateAttribute("xsi", "schemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
+            attr.Value = "flowbasedcontingency-1.xsd";
+            rootNode.SetAttributeNode(attr);
+            rootNode.Attributes[rootNode.Attributes.Count-1].Prefix = "xsi";
             doc.AppendChild(rootNode);
 
-            WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
+            WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification, "ContingencyTimeInterval");
 
             XmlElement outagesElement = doc.CreateElement("outages");
             rootNode.AppendChild(outagesElement);
@@ -108,13 +115,18 @@ namespace xmlGenerator
                 doc = new XmlDocument();
 
                 rootNode = doc.CreateElement("FlowBasedConstraintDocument");
+                rootNode.SetAttribute("DtdRelease", "4");
+                rootNode.SetAttribute("DtdVersion", "0");
                 rootNode.SetAttribute("xmlns", "flowbased");
                 rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                rootNode.SetAttribute("xsi:noNamespaceSchemaLocation", "flowbasedconstraintdocument-17.xsd");
+                attr = doc.CreateAttribute("xsi", "noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
+                attr.Value = "flowbasedconstraintdocument-17.xsd";
+                rootNode.SetAttributeNode(attr);
+
 
                 doc.AppendChild(rootNode);
 
-                WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification);
+                WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification, "ConstraintTimeInterval");
 
                 XmlElement criticalBranchesXml = doc.CreateElement("criticalBranches");
                 rootNode.AppendChild(criticalBranchesXml);
@@ -153,25 +165,23 @@ namespace xmlGenerator
                             return;
                         }
                         XmlElement criticalBranchElement = doc.CreateElement("criticalBranch");
+                        criticalBranchElement.SetAttribute("id", "testId");
 
                         XmlElement timeIntervalXml = doc.CreateElement("timeInterval");
                         timeIntervalXml.SetAttribute("v", cTimeInterval);
                         criticalBranchElement.AppendChild(timeIntervalXml);
 
                         XmlElement branchElement = doc.CreateElement("branch");
-                        branchElement.SetAttribute("from", criticalBranch.From);
+                        branchElement.SetAttribute("from",criticalBranch.From);
                         branchElement.SetAttribute("to", criticalBranch.To);
                         branchElement.SetAttribute("order", criticalBranch.Order);
+                        branchElement.SetAttribute("name", "testName");
+                        branchElement.SetAttribute("eic", "testEic");
                         criticalBranchElement.AppendChild(branchElement);
 
-                        XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
-                        tsoOriginElement.InnerText = tsoOrigin;
-                        criticalBranchElement.AppendChild(tsoOriginElement);
+                        
 
-                        XmlElement outageElement = doc.CreateElement("outage");
-                        outageElement.SetAttribute("id", outage.id);
-
-                        criticalBranchElement.AppendChild(outageElement);
+                       
 
                         foreach (var item in criticalBranch.details)
                         {
@@ -179,7 +189,14 @@ namespace xmlGenerator
                             detailXml.InnerText = item.Value;
                             criticalBranchElement.AppendChild(detailXml);
                         }
-                        
+
+                        XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
+                        tsoOriginElement.InnerText = tsoOrigin;
+                        criticalBranchElement.AppendChild(tsoOriginElement);
+
+                        XmlElement outageElement = doc.CreateElement("outage");
+                        outageElement.SetAttribute("id", outage.id);
+                        criticalBranchElement.AppendChild(outageElement);
 
                         criticalBranchesXml.AppendChild(criticalBranchElement);
                     }
@@ -209,22 +226,56 @@ namespace xmlGenerator
 
         }
         
-        static void WriteHeader(XmlElement rootNode, string cTimeInterval, string sIdentification, string rIdentification)
+        static void WriteHeader(XmlElement rootNode, string cTimeInterval, string sIdentification, string rIdentification,string cTimeIntervalName)
         {
             XmlDocument doc = rootNode.OwnerDocument;
-            XmlElement sIdentElement = doc.CreateElement("ServerIdentification");
+
+            XmlElement dIdentElement = doc.CreateElement("DocumentIdentification");
+            dIdentElement.SetAttribute("v", "1");
+            rootNode.AppendChild(dIdentElement);
+
+            XmlElement dVerElement = doc.CreateElement("DocumentVersion");
+            dVerElement.SetAttribute("v", "1");
+            rootNode.AppendChild(dVerElement);
+
+            XmlElement dTypeElement = doc.CreateElement("DocumentType");
+            dTypeElement.SetAttribute("v", "B06");
+            rootNode.AppendChild(dTypeElement);
+
+            XmlElement pTypeElement = doc.CreateElement("ProcessType");
+            pTypeElement.SetAttribute("v", "A06");
+            rootNode.AppendChild(pTypeElement);
+
+            XmlElement sIdentElement = doc.CreateElement("SenderIdentification");
             sIdentElement.SetAttribute("codingScheme", "A01");
             sIdentElement.SetAttribute("v", sIdentification);
             rootNode.AppendChild(sIdentElement);
+
+            XmlElement sRoleElement = doc.CreateElement("SenderRole");
+            sRoleElement.SetAttribute("v", "A36");
+            rootNode.AppendChild(sRoleElement);
 
             XmlElement rIdentElement = doc.CreateElement("ReceiverIdentification");
             rIdentElement.SetAttribute("codingScheme", "A01");
             rIdentElement.SetAttribute("v", rIdentification);
             rootNode.AppendChild(rIdentElement);
 
-            XmlElement cTimeIntElement = doc.CreateElement("ConstraintTimeInterval");
+            XmlElement rRoleElement = doc.CreateElement("ReceiverRole");
+            rRoleElement.SetAttribute("v", "A36");
+            rootNode.AppendChild(rRoleElement);
+
+            XmlElement cDateElement = doc.CreateElement("CreationDateTime");
+            cDateElement.SetAttribute("v",DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+            rootNode.AppendChild(cDateElement);
+
+            XmlElement cTimeIntElement = doc.CreateElement(cTimeIntervalName);
             cTimeIntElement.SetAttribute("v", cTimeInterval);
             rootNode.AppendChild(cTimeIntElement);
+
+            XmlElement domainElement = doc.CreateElement("Domain");
+            domainElement.SetAttribute("v", "10YDOM-REGION-1V");
+            domainElement.SetAttribute("codingScheme", "A01");
+            rootNode.AppendChild(domainElement);
         }
         static bool SaveXML(XmlDocument doc, string filename)
         {
