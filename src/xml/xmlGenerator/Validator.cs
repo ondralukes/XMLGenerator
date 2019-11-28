@@ -91,7 +91,7 @@ namespace xmlGenerator
                 readerSettings.Schemas.Add("flowbased", xsdLocation);
             
             
-                xmlReader = XmlReader.Create("ContingencyDictionary.xml", readerSettings);
+                xmlReader = XmlReader.Create(filename, readerSettings);
             } catch (Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.Red;

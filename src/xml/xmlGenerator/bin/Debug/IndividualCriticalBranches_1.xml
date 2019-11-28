@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FlowBasedConstraintDocument xmlns="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" noNamespaceSchemaLocation="flowbasedconstraintdocument-17.xsd">
+<FlowBasedConstraintDocument DtdRelease="4" DtdVersion="0" xmlns="flowbased" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="flowbasedconstraintdocument-17.xsd">
   <DocumentIdentification v="1" />
   <DocumentVersion v="1" />
   <DocumentType v="B06" />
@@ -8,15 +8,15 @@
   <SenderRole v="A36" />
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ReceiverRole v="A36" />
-  <CreationDateTime v="2019-11-28T08:12:19Z" />
-  <ContingencyTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
+  <CreationDateTime v="2019-11-28T08:27:02Z" />
+  <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <Domain v="10YDOM-REGION-1V" codingScheme="A01" />
   <criticalBranches>
-    <criticalBranch>
+    <criticalBranch id="testId">
       <timeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
-      <branch from="1" to="3" order="43" />
+      <branch from="D6NORD8" to="D7NORD76" order="3" name="testName" eic="testEic" />
       <tsoOrigin>1</tsoOrigin>
-      <outage id="OU-86-2868" />
+      <outage id="OU-18-8795" />
       <test>test</test>
       <CNEC>TRUE</CNEC>
     </criticalBranch>
