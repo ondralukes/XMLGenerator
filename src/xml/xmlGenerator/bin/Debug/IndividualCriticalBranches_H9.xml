@@ -8,7 +8,7 @@
   <SenderRole v="A36" />
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ReceiverRole v="A36" />
-  <CreationDateTime v="2019-11-28T08:44:48Z" />
+  <CreationDateTime v="2019-11-28T08:49:25Z" />
   <ConstraintTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <Domain v="10YDOM-REGION-1V" codingScheme="A01" />
   <criticalBranches>
@@ -24,8 +24,8 @@
       <CNEC>true</CNEC>
       <MNEC>true</MNEC>
       <direction>DIRECT</direction>
-      <tsoOrigin>1</tsoOrigin>
-      <outage id="OU-37-5765" />
+      <tsoOrigin>H9</tsoOrigin>
+      <outage id="OU-54-8587" />
     </criticalBranch>
   </criticalBranches>
 </FlowBasedConstraintDocument>

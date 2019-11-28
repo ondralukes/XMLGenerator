@@ -179,14 +179,9 @@ namespace xmlGenerator
                         branchElement.SetAttribute("eic", "testEic");
                         criticalBranchElement.AppendChild(branchElement);
 
-                        XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
-                        tsoOriginElement.InnerText = tsoOrigin;
-                        criticalBranchElement.AppendChild(tsoOriginElement);
+                        
 
-                        XmlElement outageElement = doc.CreateElement("outage");
-                        outageElement.SetAttribute("id", outage.id);
-
-                        criticalBranchElement.AppendChild(outageElement);
+                       
 
                         foreach (var item in criticalBranch.details)
                         {
@@ -194,7 +189,14 @@ namespace xmlGenerator
                             detailXml.InnerText = item.Value;
                             criticalBranchElement.AppendChild(detailXml);
                         }
-                        
+
+                        XmlElement tsoOriginElement = doc.CreateElement("tsoOrigin");
+                        tsoOriginElement.InnerText = tsoOrigin;
+                        criticalBranchElement.AppendChild(tsoOriginElement);
+
+                        XmlElement outageElement = doc.CreateElement("outage");
+                        outageElement.SetAttribute("id", outage.id);
+                        criticalBranchElement.AppendChild(outageElement);
 
                         criticalBranchesXml.AppendChild(criticalBranchElement);
                     }
