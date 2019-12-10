@@ -131,7 +131,7 @@ namespace xmlGenerator
                 {
                     int outagesCount = rnd.Next(outagesPerBranch) + 1;
 
-                    //Use only criticalBranches with sane tsoOrigin
+                    //Use only criticalBranches with same tsoOrigin
                     if (criticalBranch.TsoOrigin != tsoOrigin) continue;
 
                     for (int i = 0; i < outagesCount; i++)
