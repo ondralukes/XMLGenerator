@@ -91,7 +91,7 @@ namespace xmlGenerator
                 outagesElement.AppendChild(outage);
             }
             Console.WriteLine("Saving...");
-            if (SaveXML(doc, "ContingencyDictionary.xml") || true)
+            if (SaveXML(doc, "ContingencyDictionary.xml"))
             {
                 Validator validator = new Validator("ContingencyDictionary.xml", "flowbasedcontingency-01.xsd");
                 if (!validator.Validate()) return;
