@@ -93,7 +93,6 @@ namespace xmlGenerator
             Console.WriteLine("Saving...");
             if(SaveXML(doc, "ContingencyDictionary.xml")||true)
             {
-                Console.WriteLine("Validating...");
                 Validator validator = new Validator("ContingencyDictionary.xml", "flowbasedcontingency-01.xsd");
                 if (!validator.Validate()) return;
             }
@@ -203,7 +202,6 @@ namespace xmlGenerator
                 }
                 Console.WriteLine("Saving...");
                 if (SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml")){
-                    Console.WriteLine("Validating...");
                     Validator validator = new Validator($"IndividualCriticalBranches_{tsoOrigin}.xml", "flowbasedconstraintdocument-17.xsd");
                     if (!validator.Validate())return;
                 }
@@ -342,6 +340,9 @@ namespace xmlGenerator
                     StreamWriter outputStream = new StreamWriter(filename);
                     doc.Save(outputStream);
                     outputStream.Close();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Saved.");
+                    Console.ResetColor();
                     return true;
                 }
                 catch (Exception e)

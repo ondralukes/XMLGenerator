@@ -32,7 +32,9 @@ namespace xmlGenerator
             switch (validationResult)
             {
                 case Validator.ValidationResult.OK:
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Validation OK");
+                    Console.ResetColor();
                     break;
                 case Validator.ValidationResult.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
