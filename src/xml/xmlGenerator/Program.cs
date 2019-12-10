@@ -58,18 +58,18 @@ namespace xmlGenerator
             /////////////////////////////////////////
             #region ContingencyDictionary.xml
             Console.WriteLine("Generating ContingencyDictionary.xml...");
+
             XmlDocument doc = new XmlDocument();
             XmlElement rootNode = doc.CreateElement("FlowBasedContingency");
             rootNode.SetAttribute("DtdRelease", "4");
             rootNode.SetAttribute("DtdVersion", "0");
             rootNode.SetAttribute("xmlns", "flowbased");
             rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            
-            //rootNode.SetAttribute("xsi:schemaLocation", "flowbasedcontingency-01.xsd");
+
             XmlAttribute attr = doc.CreateAttribute("xsi", "schemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
             attr.Value = "flowbasedcontingency-1.xsd";
             rootNode.SetAttributeNode(attr);
-            rootNode.Attributes[rootNode.Attributes.Count-1].Prefix = "xsi";
+            rootNode.Attributes[rootNode.Attributes.Count - 1].Prefix = "xsi";
             doc.AppendChild(rootNode);
 
             WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification, "ContingencyTimeInterval");
@@ -91,7 +91,7 @@ namespace xmlGenerator
                 outagesElement.AppendChild(outage);
             }
             Console.WriteLine("Saving...");
-            if(SaveXML(doc, "ContingencyDictionary.xml")||true)
+            if (SaveXML(doc, "ContingencyDictionary.xml") || true)
             {
                 Validator validator = new Validator("ContingencyDictionary.xml", "flowbasedcontingency-01.xsd");
                 if (!validator.Validate()) return;
@@ -103,13 +103,11 @@ namespace xmlGenerator
             /////// IndividualCriticalBranches.xml ///////
             //////////////////////////////////////////////
             #region IndividualCriticalBranches.xml
-            Console.WriteLine("Generating IndividualCriticalBranches.xml...");
+            //Generate IndividualCriticalBranches.xml for each tsoOrigin
             foreach (var tsoOrigin in tsoOrigins)
             {
 
                 Console.WriteLine($"Generating IndividualCriticalBranches.xml for tsoOrigin {tsoOrigin}...");
-
-
 
                 doc = new XmlDocument();
 
@@ -122,7 +120,6 @@ namespace xmlGenerator
                 attr.Value = "flowbasedconstraintdocument-17.xsd";
                 rootNode.SetAttributeNode(attr);
 
-
                 doc.AppendChild(rootNode);
 
                 WriteHeader(rootNode, cTimeInterval, sIdentification, rIdentification, "ConstraintTimeInterval");
@@ -130,15 +127,17 @@ namespace xmlGenerator
                 XmlElement criticalBranchesXml = doc.CreateElement("criticalBranches");
                 rootNode.AppendChild(criticalBranchesXml);
 
-
                 foreach (var criticalBranch in criticalBranches)
                 {
                     int outagesCount = rnd.Next(outagesPerBranch) + 1;
+
+                    //Use only criticalBranches with sane tsoOrigin
                     if (criticalBranch.TsoOrigin != tsoOrigin) continue;
+
                     for (int i = 0; i < outagesCount; i++)
                     {
                         Outage outage = null;
-
+                        //Find i-th possible outage
                         int skippedOutages = 0;
                         foreach (var item in outages)
                         {
@@ -155,6 +154,7 @@ namespace xmlGenerator
                                 break;
                             }
                         }
+
                         if (outage == null)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -163,6 +163,7 @@ namespace xmlGenerator
                             Console.ReadLine();
                             return;
                         }
+
                         XmlElement criticalBranchElement = doc.CreateElement("criticalBranch");
                         criticalBranchElement.SetAttribute("id", "testId");
 
@@ -171,17 +172,14 @@ namespace xmlGenerator
                         criticalBranchElement.AppendChild(timeIntervalXml);
 
                         XmlElement branchElement = doc.CreateElement("branch");
-                        branchElement.SetAttribute("from",criticalBranch.From);
+                        branchElement.SetAttribute("from", criticalBranch.From);
                         branchElement.SetAttribute("to", criticalBranch.To);
                         branchElement.SetAttribute("order", criticalBranch.Order);
                         branchElement.SetAttribute("name", "testName");
                         branchElement.SetAttribute("eic", "testEic");
                         criticalBranchElement.AppendChild(branchElement);
 
-                        
-
-                       
-
+                        //Append custom values
                         foreach (var item in criticalBranch.details)
                         {
                             XmlElement detailXml = doc.CreateElement(item.Key);
@@ -201,9 +199,12 @@ namespace xmlGenerator
                     }
                 }
                 Console.WriteLine("Saving...");
-                if (SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml")){
+
+                //Save and validate
+                if (SaveXML(doc, $"IndividualCriticalBranches_{tsoOrigin}.xml"))
+                {
                     Validator validator = new Validator($"IndividualCriticalBranches_{tsoOrigin}.xml", "flowbasedconstraintdocument-17.xsd");
-                    if (!validator.Validate())return;
+                    if (!validator.Validate()) return;
                 }
             }
             #endregion
@@ -223,8 +224,8 @@ namespace xmlGenerator
             }
 
         }
-        
-        static void WriteHeader(XmlElement rootNode, string cTimeInterval, string sIdentification, string rIdentification,string cTimeIntervalName)
+
+        static void WriteHeader(XmlElement rootNode, string cTimeInterval, string sIdentification, string rIdentification, string cTimeIntervalName)
         {
             XmlDocument doc = rootNode.OwnerDocument;
 
@@ -263,7 +264,7 @@ namespace xmlGenerator
             rootNode.AppendChild(rRoleElement);
 
             XmlElement cDateElement = doc.CreateElement("CreationDateTime");
-            cDateElement.SetAttribute("v",DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+            cDateElement.SetAttribute("v", DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
             rootNode.AppendChild(cDateElement);
 
             XmlElement cTimeIntElement = doc.CreateElement(cTimeIntervalName);
@@ -409,7 +410,7 @@ namespace xmlGenerator
                 string line = streamReader.ReadLine();
                 string[] strValues = line.Split(';');
                 CriticalBranches item = new CriticalBranches();
-                for(int i = 0; i < keys.Length; i++)
+                for (int i = 0; i < keys.Length; i++)
                 {
                     if (strValues.Length <= i) break;
                     switch (keys[i])

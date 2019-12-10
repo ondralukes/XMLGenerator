@@ -8,203 +8,203 @@
   <SenderRole v="A36" />
   <ReceiverIdentification codingScheme="A01" v="17XTSO-CS------W" />
   <ReceiverRole v="A36" />
-  <CreationDateTime v="2019-12-10T07:46:40Z" />
+  <CreationDateTime v="2019-12-10T08:39:42Z" />
   <ContingencyTimeInterval v="2019-02-19T23:00Z/2019-02-20T23:00Z" />
   <Domain v="10YDOM-REGION-1V" codingScheme="A01" />
   <outages>
-    <outage id="OU-15-291">
+    <outage id="OU-75-9012">
       <branch eic="H2" elementName="43" from="D2NORD46" to="D6NORD65" />
     </outage>
-    <outage id="OU-77-3381">
+    <outage id="OU-21-9755">
       <branch eic="H7" elementName="35" from="D2NORD66" to="D8NORD1" />
     </outage>
-    <outage id="OU-66-3266">
+    <outage id="OU-59-7297">
       <branch eic="H8" elementName="654" from="D8NORD22" to="D5NORD40" />
     </outage>
-    <outage id="OU-98-3492">
+    <outage id="OU-78-4681">
       <branch eic="H0" elementName="324" from="D5NORD34" to="D6NORD64" />
     </outage>
-    <outage id="OU-49-870">
+    <outage id="OU-37-1158">
       <branch eic="H8" elementName="534" from="D3NORD58" to="D9NORD27" />
     </outage>
-    <outage id="OU-97-7166">
+    <outage id="OU-82-2143">
       <branch eic="H3" elementName="731" from="D9NORD0" to="D6NORD31" />
     </outage>
-    <outage id="OU-5-4696">
+    <outage id="OU-51-4809">
       <branch eic="H2" elementName="124" from="D8NORD60" to="D1NORD48" />
     </outage>
-    <outage id="OU-58-1920">
+    <outage id="OU-66-7443">
       <branch eic="H9" elementName="25" from="D3NORD74" to="D4NORD17" />
     </outage>
-    <outage id="OU-75-5615">
+    <outage id="OU-68-774">
       <branch eic="H4" elementName="167" from="D8NORD7" to="D9NORD97" />
     </outage>
-    <outage id="OU-90-1306">
+    <outage id="OU-48-9855">
       <branch eic="H4" elementName="54" from="D7NORD23" to="D8NORD22" />
     </outage>
-    <outage id="OU-60-9516">
+    <outage id="OU-25-8212">
       <branch eic="H3" elementName="321" from="D3NORD39" to="D2NORD89" />
     </outage>
-    <outage id="OU-2-7229">
+    <outage id="OU-81-2302">
       <branch eic="H5" elementName="32" from="D3NORD9" to="D2NORD51" />
     </outage>
-    <outage id="OU-57-89">
+    <outage id="OU-91-9892">
       <branch eic="H3" elementName="454" from="D4NORD6" to="D2NORD31" />
     </outage>
-    <outage id="OU-50-336">
+    <outage id="OU-16-7605">
       <branch eic="H9" elementName="754" from="D2NORD52" to="D5NORD57" />
     </outage>
-    <outage id="OU-83-8881">
+    <outage id="OU-10-7390">
       <branch eic="H5" elementName="375" from="D2NORD55" to="D1NORD58" />
     </outage>
-    <outage id="OU-25-8834">
+    <outage id="OU-62-4401">
       <branch eic="H6" elementName="499" from="D5NORD6" to="D0NORD32" />
     </outage>
-    <outage id="OU-9-6910">
+    <outage id="OU-2-1360">
       <branch eic="H2" elementName="639" from="D0NORD27" to="D5NORD88" />
     </outage>
-    <outage id="OU-49-6266">
+    <outage id="OU-19-9926">
       <branch eic="H8" elementName="662" from="D1NORD9" to="D0NORD73" />
     </outage>
-    <outage id="OU-71-6371">
+    <outage id="OU-50-7635">
       <branch eic="H9" elementName="830" from="D8NORD64" to="D8NORD67" />
     </outage>
-    <outage id="OU-66-3520">
+    <outage id="OU-49-165">
       <branch eic="H6" elementName="961" from="D0NORD16" to="D1NORD1" />
     </outage>
-    <outage id="OU-92-8253">
+    <outage id="OU-25-9642">
       <branch eic="H8" elementName="245" from="D8NORD82" to="D9NORD34" />
     </outage>
-    <outage id="OU-77-7441">
+    <outage id="OU-37-3646">
       <branch eic="H2" elementName="606" from="D2NORD59" to="D6NORD23" />
     </outage>
-    <outage id="OU-52-2347">
+    <outage id="OU-6-806">
       <branch eic="H0" elementName="184" from="D2NORD20" to="D1NORD73" />
     </outage>
-    <outage id="OU-84-1218">
+    <outage id="OU-84-802">
       <branch eic="H1" elementName="151" from="D5NORD33" to="D4NORD27" />
     </outage>
-    <outage id="OU-34-9891">
+    <outage id="OU-88-5262">
       <branch eic="H6" elementName="342" from="D8NORD82" to="D3NORD8" />
     </outage>
-    <outage id="OU-57-9339">
+    <outage id="OU-76-7462">
       <branch eic="H7" elementName="791" from="D3NORD35" to="D9NORD68" />
     </outage>
-    <outage id="OU-49-4626">
+    <outage id="OU-19-9684">
       <branch eic="H7" elementName="968" from="D8NORD56" to="D6NORD19" />
     </outage>
-    <outage id="OU-97-1987">
+    <outage id="OU-74-9319">
       <branch eic="H7" elementName="272" from="D2NORD94" to="D1NORD19" />
     </outage>
-    <outage id="OU-99-547">
+    <outage id="OU-8-9832">
       <branch eic="H6" elementName="948" from="D6NORD24" to="D1NORD88" />
     </outage>
-    <outage id="OU-76-6523">
+    <outage id="OU-6-6085">
       <branch eic="H8" elementName="968" from="D8NORD8" to="D5NORD30" />
     </outage>
-    <outage id="OU-81-9482">
+    <outage id="OU-56-238">
       <branch eic="H6" elementName="827" from="D8NORD77" to="D5NORD28" />
     </outage>
-    <outage id="OU-51-6042">
+    <outage id="OU-36-6329">
       <branch eic="H9" elementName="653" from="D7NORD3" to="D9NORD5" />
     </outage>
-    <outage id="OU-83-957">
+    <outage id="OU-49-3878">
       <branch eic="H0" elementName="742" from="D4NORD82" to="D7NORD52" />
     </outage>
-    <outage id="OU-62-3602">
+    <outage id="OU-19-3747">
       <branch eic="H3" elementName="40" from="D5NORD0" to="D7NORD24" />
     </outage>
-    <outage id="OU-96-9613">
+    <outage id="OU-28-6720">
       <branch eic="H3" elementName="107" from="D3NORD87" to="D4NORD75" />
     </outage>
-    <outage id="OU-47-1146">
+    <outage id="OU-23-9226">
       <branch eic="H2" elementName="441" from="D4NORD81" to="D1NORD19" />
     </outage>
-    <outage id="OU-89-5513">
+    <outage id="OU-57-4671">
       <branch eic="H0" elementName="284" from="D3NORD51" to="D1NORD84" />
     </outage>
-    <outage id="OU-20-7750">
+    <outage id="OU-72-2883">
       <branch eic="H1" elementName="691" from="D7NORD20" to="D7NORD67" />
     </outage>
-    <outage id="OU-18-2852">
+    <outage id="OU-44-4544">
       <branch eic="H6" elementName="530" from="D1NORD4" to="D3NORD65" />
     </outage>
-    <outage id="OU-19-3388">
+    <outage id="OU-16-8302">
       <branch eic="H9" elementName="461" from="D9NORD26" to="D3NORD21" />
     </outage>
-    <outage id="OU-16-3848">
+    <outage id="OU-14-867">
       <branch eic="H1" elementName="836" from="D8NORD94" to="D7NORD30" />
     </outage>
-    <outage id="OU-68-8431">
+    <outage id="OU-87-5749">
       <branch eic="H5" elementName="114" from="D8NORD41" to="D6NORD40" />
     </outage>
-    <outage id="OU-31-3193">
+    <outage id="OU-97-8773">
       <branch eic="H2" elementName="409" from="D1NORD50" to="D3NORD20" />
     </outage>
-    <outage id="OU-38-6327">
+    <outage id="OU-24-533">
       <branch eic="H2" elementName="231" from="D4NORD28" to="D6NORD72" />
     </outage>
-    <outage id="OU-71-3010">
+    <outage id="OU-38-2668">
       <branch eic="H3" elementName="42" from="D4NORD75" to="D5NORD87" />
     </outage>
-    <outage id="OU-62-6624">
+    <outage id="OU-91-5219">
       <branch eic="H4" elementName="818" from="D5NORD63" to="D6NORD8" />
     </outage>
-    <outage id="OU-87-117">
+    <outage id="OU-69-8905">
       <branch eic="H4" elementName="753" from="D6NORD26" to="D2NORD32" />
     </outage>
-    <outage id="OU-53-9800">
+    <outage id="OU-45-2325">
       <branch eic="H2" elementName="881" from="D8NORD58" to="D0NORD12" />
     </outage>
-    <outage id="OU-30-1673">
+    <outage id="OU-59-7418">
       <branch eic="H1" elementName="678" from="D1NORD43" to="D5NORD39" />
     </outage>
-    <outage id="OU-91-4340">
+    <outage id="OU-87-6740">
       <branch eic="H1" elementName="80" from="D7NORD8" to="D2NORD95" />
     </outage>
-    <outage id="OU-61-4810">
+    <outage id="OU-88-4726">
       <branch eic="H7" elementName="795" from="D0NORD17" to="D0NORD65" />
     </outage>
-    <outage id="OU-15-3875">
+    <outage id="OU-79-2161">
       <branch eic="H9" elementName="82" from="D3NORD53" to="D9NORD48" />
     </outage>
-    <outage id="OU-51-4591">
+    <outage id="OU-28-8403">
       <branch eic="H5" elementName="879" from="D4NORD62" to="D1NORD71" />
     </outage>
-    <outage id="OU-3-9480">
+    <outage id="OU-16-7318">
       <branch eic="H8" elementName="983" from="D1NORD26" to="D5NORD5" />
     </outage>
-    <outage id="OU-26-2045">
+    <outage id="OU-23-4605">
       <branch eic="H8" elementName="680" from="D2NORD17" to="D2NORD17" />
     </outage>
-    <outage id="OU-1-7145">
+    <outage id="OU-48-6277">
       <branch eic="H7" elementName="874" from="D8NORD5" to="D4NORD19" />
     </outage>
-    <outage id="OU-86-4256">
+    <outage id="OU-81-2344">
       <branch eic="H5" elementName="318" from="D0NORD99" to="D0NORD94" />
     </outage>
-    <outage id="OU-48-4351">
+    <outage id="OU-46-4759">
       <branch eic="H2" elementName="848" from="D8NORD89" to="D3NORD35" />
     </outage>
-    <outage id="OU-26-6738">
+    <outage id="OU-15-7919">
       <branch eic="H0" elementName="622" from="D8NORD23" to="D0NORD10" />
     </outage>
-    <outage id="OU-28-5143">
+    <outage id="OU-65-6149">
       <branch eic="H5" elementName="612" from="D6NORD50" to="D2NORD2" />
     </outage>
-    <outage id="OU-71-9885">
+    <outage id="OU-14-1393">
       <branch eic="H0" elementName="602" from="D5NORD93" to="D5NORD65" />
     </outage>
-    <outage id="OU-64-6688">
+    <outage id="OU-98-153">
       <branch eic="H8" elementName="484" from="D9NORD43" to="D6NORD52" />
     </outage>
-    <outage id="OU-33-8123">
+    <outage id="OU-76-7171">
       <branch eic="H3" elementName="603" from="D4NORD32" to="D3NORD12" />
     </outage>
-    <outage id="OU-24-8856">
+    <outage id="OU-22-6879">
       <branch eic="H5" elementName="860" from="D0NORD26" to="D2NORD12" />
     </outage>
-    <outage id="OU-1-2221">
+    <outage id="OU-1-4965">
       <branch eic="H9" elementName="195" from="D0NORD82" to="D2NORD70" />
     </outage>
   </outages>
