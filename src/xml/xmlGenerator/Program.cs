@@ -22,6 +22,8 @@ namespace xmlGenerator
         {
             Application.EnableVisualStyles();
             rnd = new Random();
+
+            //Prompt user for data
             InputPrompt prompt;
             while (true)
             {
@@ -47,6 +49,7 @@ namespace xmlGenerator
             List<Outage> outages = LoadOutagesFromCSV("outages.csv");
             List<CriticalBranches> criticalBranches = LoadCriticalBranchesFromCSV("criticalBranches.csv");
             List<string> tsoOrigins = new List<string>();
+
             foreach (var item in criticalBranches)
             {
                 if (!tsoOrigins.Contains(item.TsoOrigin)) tsoOrigins.Add(item.TsoOrigin);
@@ -81,6 +84,7 @@ namespace xmlGenerator
             {
                 XmlElement outage = doc.CreateElement("outage");
                 outage.SetAttribute("id", item.id);
+
                 XmlElement branch = doc.CreateElement("branch");
                 branch.SetAttribute("eic", item.TsoOrigin);
                 branch.SetAttribute("elementName", item.ElementName);
@@ -90,6 +94,8 @@ namespace xmlGenerator
                 outage.AppendChild(branch);
                 outagesElement.AppendChild(outage);
             }
+
+            //Save and validate
             Console.WriteLine("Saving...");
             if (SaveXML(doc, "ContingencyDictionary.xml"))
             {
@@ -116,8 +122,10 @@ namespace xmlGenerator
                 rootNode.SetAttribute("DtdVersion", "0");
                 rootNode.SetAttribute("xmlns", "flowbased");
                 rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
                 attr = doc.CreateAttribute("xsi", "noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
                 attr.Value = "flowbasedconstraintdocument-17.xsd";
+
                 rootNode.SetAttributeNode(attr);
 
                 doc.AppendChild(rootNode);
@@ -144,6 +152,7 @@ namespace xmlGenerator
                             if (item.TsoOrigin != criticalBranch.TsoOrigin) continue;
                             if (item.From == criticalBranch.From) continue;
                             if (item.To == criticalBranch.To) continue;
+
                             if (skippedOutages != i)
                             {
                                 skippedOutages++;
@@ -177,6 +186,7 @@ namespace xmlGenerator
                         branchElement.SetAttribute("order", criticalBranch.Order);
                         branchElement.SetAttribute("name", "testName");
                         branchElement.SetAttribute("eic", "testEic");
+
                         criticalBranchElement.AppendChild(branchElement);
 
                         //Append custom values
@@ -341,6 +351,7 @@ namespace xmlGenerator
                     StreamWriter outputStream = new StreamWriter(filename);
                     doc.Save(outputStream);
                     outputStream.Close();
+
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Saved.");
                     Console.ResetColor();
@@ -385,14 +396,19 @@ namespace xmlGenerator
             List<Outage> items = new List<Outage>();
             while (!streamReader.EndOfStream)
             {
+                //Read and split line
                 string line = streamReader.ReadLine();
                 string[] strValues = line.Split(';');
+
+                //Create Outlet object
                 Outage item = new Outage();
+
                 item.From = strValues[0];
                 item.To = strValues[1];
                 item.ElementName = strValues[2];
                 item.TsoOrigin = strValues[3];
                 item.id = $"OU-{rnd.Next(100)}-{rnd.Next(10000)}";
+
                 items.Add(item);
             }
             Console.WriteLine($"Loaded {items.Count} outages");
@@ -402,13 +418,17 @@ namespace xmlGenerator
         {
             StreamReader streamReader = new StreamReader(filename);
 
-            //Skip header
+            //Read column headers
             string[] keys = streamReader.ReadLine().Split(';');
             List<CriticalBranches> items = new List<CriticalBranches>();
+
             while (!streamReader.EndOfStream)
             {
+                //Read line
                 string line = streamReader.ReadLine();
                 string[] strValues = line.Split(';');
+
+                //Put data to object
                 CriticalBranches item = new CriticalBranches();
                 for (int i = 0; i < keys.Length; i++)
                 {
@@ -436,6 +456,7 @@ namespace xmlGenerator
                             break;
                     }
                 }
+
                 items.Add(item);
             }
             Console.WriteLine($"Loaded {items.Count} critical branches");
