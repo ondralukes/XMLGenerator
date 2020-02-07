@@ -13,8 +13,8 @@ namespace xmlGenerator
     public partial class InputPrompt : Form
     {
         public string constraintTimeInterval;
-        public string senderIndentification;
-        public string receiverIndentification;
+        public string senderIdentification;
+        public string receiverIdentification;
         public int outagesPerBranch = 0;
         public bool inputOK = false;
         public InputPrompt()
@@ -30,14 +30,14 @@ namespace xmlGenerator
         private void OkBtn_Click(object sender, EventArgs e)
         {
             constraintTimeInterval = cTimeIntTextBox.Text;
-            senderIndentification = SIndentificationTextBox.Text;
-            receiverIndentification = RIndentificationTextBox.Text;
+            senderIdentification = SIdentificationTextBox.Text;
+            receiverIdentification = RIdentificationTextBox.Text;
             outagesPerBranch = (int)outagesCountUpDown.Value;
             inputOK = true;
             this.Close();
         }
 
-        private void SIndentificationTextBox_TextChanged(object sender, EventArgs e)
+        private void SIdentificationTextBox_TextChanged(object sender, EventArgs e)
         {
 
         }

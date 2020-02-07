@@ -67,6 +67,7 @@
       <DependentUpon>ValidationResultForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Validator.cs" />
+    <Compile Include="XMLGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
