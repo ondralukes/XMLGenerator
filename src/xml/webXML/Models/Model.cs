@@ -51,10 +51,12 @@ namespace webXML.Models
             {
                 generator.DontAsk();
                 generator.SetSettings(Settings);
-                generator.Generate();
-                OutputFile = $"{tempDirectory}.zip";
-                ZipFile.CreateFromDirectory(tempDirectory, _OutputFile);
-                Directory.Delete(tempDirectory, true);
+                if (generator.Generate())
+                {
+                    OutputFile = $"{tempDirectory}.zip";
+                    ZipFile.CreateFromDirectory(tempDirectory, _OutputFile);
+                    Directory.Delete(tempDirectory, true);
+                }
             }
             if(File.Exists(OutagesCSV)) File.Delete(OutagesCSV);
             if (File.Exists(CriticalBranchesCSV)) File.Delete(CriticalBranchesCSV);

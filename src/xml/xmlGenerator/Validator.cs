@@ -87,6 +87,7 @@ namespace xmlGenerator
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.AllowXmlAttributes;
             readerSettings.ValidationEventHandler += new ValidationEventHandler(onValidation);
             readerSettings.ValidationType = ValidationType.Schema;
+            readerSettings.Schemas.XmlResolver = new XmlUrlResolver();
             XmlReader xmlReader = null;
             FileStream fs = File.Open(filename, FileMode.Open, FileAccess.Read);
             try

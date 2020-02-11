@@ -499,10 +499,10 @@ namespace xmlGenerator
     }
     public class Settings
     {
-        public string constraintTimeInterval = "";
-        public string senderIdentification = "";
-        public string receiverIdentification = "";
-        public int outagesPerBranch = 0;
+        public string constraintTimeInterval { get; set; }
+        public string senderIdentification { get; set; }
+        public string receiverIdentification { get; set; }
+        public int outagesPerBranch { get; set; }
     }
     class OverwritePromptResult
     {
