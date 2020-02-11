@@ -31,8 +31,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cTimeIntTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.SIndentificationTextBox = new System.Windows.Forms.TextBox();
-            this.RIndentificationTextBox = new System.Windows.Forms.TextBox();
+            this.SIdentificationTextBox = new System.Windows.Forms.TextBox();
+            this.RIdentificationTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.okBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -62,36 +62,36 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(13, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 17);
+            this.label2.Size = new System.Drawing.Size(133, 17);
             this.label2.TabIndex = 2;
-            this.label2.Text = "SenderIndentification";
+            this.label2.Text = "SenderIdentification";
             this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
-            // SIndentificationTextBox
+            // SIdentificationTextBox
             // 
-            this.SIndentificationTextBox.Location = new System.Drawing.Point(180, 39);
-            this.SIndentificationTextBox.Name = "SIndentificationTextBox";
-            this.SIndentificationTextBox.Size = new System.Drawing.Size(375, 22);
-            this.SIndentificationTextBox.TabIndex = 3;
-            this.SIndentificationTextBox.Text = "17XTSO-CS------W";
-            this.SIndentificationTextBox.TextChanged += new System.EventHandler(this.SIndentificationTextBox_TextChanged);
+            this.SIdentificationTextBox.Location = new System.Drawing.Point(180, 39);
+            this.SIdentificationTextBox.Name = "SIdentificationTextBox";
+            this.SIdentificationTextBox.Size = new System.Drawing.Size(375, 22);
+            this.SIdentificationTextBox.TabIndex = 3;
+            this.SIdentificationTextBox.Text = "17XTSO-CS------W";
+            this.SIdentificationTextBox.TextChanged += new System.EventHandler(this.SIdentificationTextBox_TextChanged);
             // 
-            // RIndentificationTextBox
+            // RIdentificationTextBox
             // 
-            this.RIndentificationTextBox.Location = new System.Drawing.Point(180, 67);
-            this.RIndentificationTextBox.Name = "RIndentificationTextBox";
-            this.RIndentificationTextBox.Size = new System.Drawing.Size(375, 22);
-            this.RIndentificationTextBox.TabIndex = 4;
-            this.RIndentificationTextBox.Text = "17XTSO-CS------W";
+            this.RIdentificationTextBox.Location = new System.Drawing.Point(180, 67);
+            this.RIdentificationTextBox.Name = "RIdentificationTextBox";
+            this.RIdentificationTextBox.Size = new System.Drawing.Size(375, 22);
+            this.RIdentificationTextBox.TabIndex = 4;
+            this.RIdentificationTextBox.Text = "17XTSO-CS------W";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 70);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(151, 17);
+            this.label3.Size = new System.Drawing.Size(143, 17);
             this.label3.TabIndex = 5;
-            this.label3.Text = "ReceiverIndentification";
+            this.label3.Text = "ReceiverIdentification";
             // 
             // okBtn
             // 
@@ -139,8 +139,8 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.okBtn);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.RIndentificationTextBox);
-            this.Controls.Add(this.SIndentificationTextBox);
+            this.Controls.Add(this.RIdentificationTextBox);
+            this.Controls.Add(this.SIdentificationTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cTimeIntTextBox);
             this.Controls.Add(this.label1);
@@ -161,8 +161,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox cTimeIntTextBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox SIndentificationTextBox;
-        private System.Windows.Forms.TextBox RIndentificationTextBox;
+        private System.Windows.Forms.TextBox SIdentificationTextBox;
+        private System.Windows.Forms.TextBox RIdentificationTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button okBtn;
         private System.Windows.Forms.Label label4;

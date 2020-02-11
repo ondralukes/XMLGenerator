@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 using System.Collections.Generic;
@@ -16,70 +17,69 @@ namespace xmlGenerator
         }
         string filename;
         string xsdLocation;
-        public Validator(string _filename,string _xsdLocation)
-        {
-            filename = _filename;
-            xsdLocation = _xsdLocation;
-        }
         public static bool ignoreWarnings = false;
         private int validationWarnings = 0;
         private int validationErrors = 0;
         private List<SuperXmlSchemaException> xmlExceptions = new List<SuperXmlSchemaException>();
-        public bool Validate()
+        private TextWriter outputStream;
+        private XMLGenerator.ValidationResultPromptDelegate validationResultPrompt;
+        public Validator(string _filename,string _xsdLocation, TextWriter outStream, XMLGenerator.ValidationResultPromptDelegate prompt)
+        {
+            filename = _filename;
+            xsdLocation = _xsdLocation;
+            outputStream = outStream;
+            validationResultPrompt = prompt;
+        }
+        
+        public bool Validate(bool consoleOnly)
         {
             Validator.ValidationResult validationResult = ValidateCore();
-            ValidationResultForm validationResultForm;
             switch (validationResult)
             {
                 case Validator.ValidationResult.OK:
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Validation OK");
-                    Console.ResetColor();
+                    outputStream.WriteLine("Validation OK");
                     break;
                 case Validator.ValidationResult.Warning:
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write($"Validation finished with {validationWarnings} warnings. Continue? ");
-                    bool stop=false;
-                    if (!ignoreWarnings)
+                    outputStream.Write($"Validation finished with {validationWarnings} warnings. Continue? ");
+                    bool stop = false;
+                    if (!ignoreWarnings && !consoleOnly)
                     {
-                        validationResultForm = new ValidationResultForm(xmlExceptions, true);
-                        validationResultForm.ShowDialog();
-                        stop = validationResultForm.stop;
-                        ignoreWarnings = validationResultForm.ignoreWarnings;
+                        ValidationResultPromptResult res = new ValidationResultPromptResult();
+                        if(validationResultPrompt != null) res = validationResultPrompt(xmlExceptions, true);
+                        stop = res.stop;
+                        ignoreWarnings = res.ignoreWarnings;
+                    } else if (consoleOnly)
+                    {
+                        ExceptionDump();
                     }
                     if (stop)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("No.");
-                        Console.ResetColor();
+                        outputStream.WriteLine("No.");
                     } else
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Yes.");
-                        Console.ResetColor();
+                        outputStream.WriteLine("Yes.");
                     }
                     return !stop;
-                    break;
                 case Validator.ValidationResult.Error:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Validation finished with errors!");
-                    validationResultForm = new ValidationResultForm(xmlExceptions, false);
-                    validationResultForm.ShowDialog();
+                    outputStream.WriteLine("Validation finished with errors!");
+                    if (!consoleOnly)
+                    {
+                        if (validationResultPrompt != null) validationResultPrompt(xmlExceptions, false);
+                    } else
+                    {
+                        ExceptionDump();
+                    }
                     return false;
-                    break;
                 case ValidationResult.Failed:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Validation failed!");
-                    Console.WriteLine("Continuing without validation");
-                    Console.ResetColor();
+                    outputStream.WriteLine("Validation failed!");
+                    outputStream.WriteLine("Continuing without validation");
                     return true;
-                    break;
             }
             return true;
         }
         public ValidationResult ValidateCore()
         {
-            Console.WriteLine($"[Validator] Validating {filename}");
+            outputStream.WriteLine($"[Validator] Validating {filename}");
             XmlReaderSettings readerSettings = new XmlReaderSettings();
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessInlineSchema;
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
@@ -87,43 +87,63 @@ namespace xmlGenerator
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.AllowXmlAttributes;
             readerSettings.ValidationEventHandler += new ValidationEventHandler(onValidation);
             readerSettings.ValidationType = ValidationType.Schema;
-            XmlReader xmlReader;
+            readerSettings.Schemas.XmlResolver = new XmlUrlResolver();
+            XmlReader xmlReader = null;
+            FileStream fs = File.Open(filename, FileMode.Open, FileAccess.Read);
             try
             {
+
                 readerSettings.Schemas.Add("flowbased", xsdLocation);
-            
-            
-                xmlReader = XmlReader.Create(filename, readerSettings);
+
+                xmlReader = XmlReader.Create(fs, readerSettings);
             } catch (Exception e)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"[Validator] Validation failed: {e.Message}");
-                Console.ResetColor();
+                outputStream.WriteLine($"[Validator] Validation failed: {e.Message}");
+                if(xmlReader != null) xmlReader.Close();
+                fs.Close();
                 return ValidationResult.Failed;
             }
             
             while (xmlReader.Read()) ;
             xmlReader.Close();
+            fs.Close();
             if (validationWarnings == 0 && validationErrors == 0) return ValidationResult.OK;
             if (validationErrors == 0) return ValidationResult.Warning;
             return ValidationResult.Error;
+        }
+
+        private void ExceptionDump()
+        {
+            outputStream.WriteLine();
+            outputStream.WriteLine($"======{validationWarnings} warnings==={validationErrors} errors======");
+            foreach (var exception in xmlExceptions)
+            {
+                outputStream.WriteLine(
+                    $"==={(exception.severity==XmlSeverityType.Error?"Error":"Warning")}" +
+                    $" at line {exception.exception.LineNumber}: {exception.exception.Message}"
+                    );
+            }
+            outputStream.WriteLine();
         }
         private void onValidation(object sender, ValidationEventArgs e)
         {
             xmlExceptions.Add(new SuperXmlSchemaException(e.Exception,e.Severity));
             if (e.Severity == XmlSeverityType.Warning)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                //Console.WriteLine($"[Validator] Warning: {e.Message} at line {e.Exception.LineNumber}");
-                Console.ResetColor();
+                //outputStream.WriteLine($"[Validator] Warning: {e.Message} at line {e.Exception.LineNumber}");
                 validationWarnings++;
             }
             else if (e.Severity == XmlSeverityType.Error)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                //Console.WriteLine($"[Validator] Error: {e.Message} at line {e.Exception.LineNumber}");
-                Console.ResetColor();
+                //outputStream.WriteLine($"[Validator] Error: {e.Message} at line {e.Exception.LineNumber}");
                 validationErrors++;
+            }
+        }
+        protected class XmlXsdResolver : XmlUrlResolver
+        {
+            public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
+            {
+                return base.GetEntity(absoluteUri, role, ofObjectToReturn);
             }
         }
     }

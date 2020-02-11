@@ -1,0 +1,43 @@
+﻿@model webXML.Models.Model
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Index</h1>
+<form method="post" asp-action="Index" enctype="multipart/form-data">
+    Outages CSV file:
+    <input name="outagesFile" type="file" /><br />
+    Critical Branches CSV file:
+    <input name="criticalBranchesFile" type="file" /><br />
+    <br />
+    ConstraintTimeInterval:
+    <input
+           asp-for="Settings.constraintTimeInterval"
+           type="text"
+           value="2019-02-19T23:00Z/2019-02-20T23:00Z"
+           /><br />
+    ServerIdentification:
+    <input
+           asp-for="Settings.senderIdentification"
+           type="text"
+           value="17XTSO-CS------W"
+           /><br />
+    ReceiverIdentification:
+    <input
+           asp-for="Settings.receiverIdentification"
+           type="text"
+           value="17XTSO-CS------W"
+           /><br />
+    Outages per branch:
+    <input
+           asp-for="Settings.outagesPerBranch"
+           type="number"
+           value="1"
+           /><br />
+    <input type="submit" />
+</form>
+<form action="download" method="get">
+    <input type="hidden" value="@Model.OutputFile" name="filename"/>
+    <input id="downloadBtn" type="submit" value="Download" style="@(Model.OutputFile==null?"display: none;":"")" onclick="document.getElementById('downloadBtn').style.display = 'none';">
+</form>
+<p style="white-space: pre-line">@Model.Output</p>
