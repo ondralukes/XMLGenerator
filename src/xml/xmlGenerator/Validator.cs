@@ -88,20 +88,23 @@ namespace xmlGenerator
             readerSettings.ValidationEventHandler += new ValidationEventHandler(onValidation);
             readerSettings.ValidationType = ValidationType.Schema;
             XmlReader xmlReader = null;
+            FileStream fs = File.Open(filename, FileMode.Open, FileAccess.Read);
             try
             {
                 readerSettings.Schemas.Add("flowbased", xsdLocation);
 
-                xmlReader = XmlReader.Create(filename, readerSettings);
+                xmlReader = XmlReader.Create(fs, readerSettings);
             } catch (Exception e)
             {
                 outputStream.WriteLine($"[Validator] Validation failed: {e.Message}");
                 if(xmlReader != null) xmlReader.Close();
+                fs.Close();
                 return ValidationResult.Failed;
             }
             
             while (xmlReader.Read()) ;
             xmlReader.Close();
+            fs.Close();
             if (validationWarnings == 0 && validationErrors == 0) return ValidationResult.OK;
             if (validationErrors == 0) return ValidationResult.Warning;
             return ValidationResult.Error;

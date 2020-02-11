@@ -36,4 +36,8 @@
            /><br />
     <input type="submit" />
 </form>
+<form action="download" method="get">
+    <input type="hidden" value="@Model.OutputFile" name="filename"/>
+    <input id="downloadBtn" type="submit" value="Download" style="@(Model.OutputFile==null?"display: none;":"")" onclick="document.getElementById('downloadBtn').style.display = 'none';">
+</form>
 <p style="white-space: pre-line">@Model.Output</p>

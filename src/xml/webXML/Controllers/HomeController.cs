@@ -49,5 +49,12 @@ namespace webXML.Controllers
             }
             return View(m);
         }
+        [HttpGet("download")]
+        public IActionResult Download(string filename)
+        {
+            byte[] content = System.IO.File.ReadAllBytes(filename);
+            System.IO.File.Delete(filename);
+            return File(content, "application/force-download", "output.zip");
+        }
     }
 }
