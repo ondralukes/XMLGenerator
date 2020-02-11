@@ -142,7 +142,7 @@ namespace xmlGenerator
                 rootNode.SetAttribute("xmlns", "flowbased");
                 rootNode.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 
-                attr = doc.CreateAttribute("xsi", "noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
+                attr = doc.CreateAttribute("xsi", "schemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
                 attr.Value = "flowbasedconstraintdocument-17.xsd";
 
                 rootNode.SetAttributeNode(attr);

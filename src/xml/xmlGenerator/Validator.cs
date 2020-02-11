@@ -91,6 +91,7 @@ namespace xmlGenerator
             FileStream fs = File.Open(filename, FileMode.Open, FileAccess.Read);
             try
             {
+
                 readerSettings.Schemas.Add("flowbased", xsdLocation);
 
                 xmlReader = XmlReader.Create(fs, readerSettings);
