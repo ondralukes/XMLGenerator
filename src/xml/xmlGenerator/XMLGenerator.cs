@@ -192,6 +192,7 @@ namespace xmlGenerator
                         if (outage == null)
                         {
                             outputStream.WriteLine("No possible outage!");
+                            Summary = "Could not find possible outage for critical branch.";
                             return false;
                         }
 

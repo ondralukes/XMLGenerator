@@ -8,6 +8,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- JQuery -->
+    <script src="//code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -17,6 +20,20 @@
 </head>
 <body>
     <script>
+        var outagesFile = false;
+        var criticalBranchesFile = false;
+        function onConstraintIntervalChanged() {
+            var startDate = document.getElementById('date-start').value;
+            var endDate = document.getElementById('date-end').value;
+            var startTime = document.getElementById('time-start').value;
+            var endTime = document.getElementById('time-end').value;
+            var startDateParts = startDate.split('/');
+            var endDateParts = endDate.split('/');
+            var res = startDateParts[2] + '-' + startDateParts[0] + '-' + startDateParts[1] + 'T' + startTime + 'Z/';
+            res += endDateParts[2] + '-' + endDateParts[0] + '-' + endDateParts[1] + 'T' + endTime + 'Z'
+            console.log(res);
+            document.getElementById('constraintTimeInterval').value = res;
+        }
         function dragOverHandler(ev) {
             ev.preventDefault();
         }
@@ -24,9 +41,7 @@
             ev.preventDefault();
 
             if (ev.dataTransfer.items) {
-                // Use DataTransferItemList interface to access the file(s)
                 for (var i = 0; i < ev.dataTransfer.items.length; i++) {
-                    // If dropped items aren't files, reject them
                     if (ev.dataTransfer.items[i].kind === 'file') {
                         var file = ev.dataTransfer.items[i].getAsFile();
                         console.log('... file[' + i + '].name = ' + file.name);
@@ -34,7 +49,6 @@
                     }
                 }
             } else {
-                // Use DataTransfer interface to access the file(s)
                 for (var i = 0; i < ev.dataTransfer.files.length; i++) {
                     console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
                     uploadFile(file, index);
@@ -55,12 +69,15 @@
                         document.getElementById('outagesDrop').innerHTML = "Upload OK!";
                         document.getElementById('outagesDrop').classList.add('drop-ok');
                         document.getElementById('outagesDrop').classList.remove('drop-fail');
+                        outagesFile = true;
                     } else if (index == 1) {
                         document.getElementById('criticalBranchesCsvFilename').value = xhr.responseText;
                         document.getElementById('criticalBranchesDrop').innerHTML = "Upload OK!";
                         document.getElementById('criticalBranchesDrop').classList.add('drop-ok');
                         document.getElementById('criticalBranchesDrop').classList.remove('drop-fail');
+                        criticalBranchesFile = true;
                     }
+                    
                 }
                 else if (xhr.readyState == 4 && xhr.status != 200) {
                     console.log("Upload Error");
@@ -69,13 +86,16 @@
                         document.getElementById('outagesDrop').innerHTML = "Upload Failed!";
                         document.getElementById('outagesDrop').classList.add('drop-fail');
                         document.getElementById('outagesDrop').classList.remove('drop-ok');
+                        outagesFile = false;
                     } else if (index == 1) {
                         document.getElementById('criticalBranchesCsvFilename').value = "";
                         document.getElementById('criticalBranchesDrop').innerHTML = "Upload Failed!";
                         document.getElementById('criticalBranchesDrop').classList.add('drop-fail');
                         document.getElementById('criticalBranchesDrop').classList.remove('drop-ok');
+                        criticalBranchesFile = false;
                     }
                 }
+                updateSubmitButton();
             })
 
             formData.append('file', file);
@@ -88,6 +108,35 @@
             document.getElementById('rawOutput').style.display = "";
             document.getElementById('viewRawBtn').style.display = "none";
         }
+        function updateSubmitButton() {
+            document.getElementById('submitButton').className = "btn btn-lg btn-block btn-outline-primary not-ready-btn";
+            if (!outagesFile) {
+                document.getElementById('errorMsg').innerHTML = "Outages file not uploaded!";
+                return;
+            }
+            if (!criticalBranchesFile) {
+                document.getElementById('errorMsg').innerHTML = "Critical branches file not uploaded!";
+                return;
+            }
+             document.getElementById('errorMsg').innerHTML = "";
+            document.getElementById('submitButton').className = "btn btn-primary btn-lg btn-block";
+        }
+        function submit() {
+            if (outagesFile && criticalBranchesFile) {
+                document.getElementById('mainForm').submit();
+            }
+        }
+        $(document).ready(function () {
+             var date_input=$('input[name="date"]');
+      var container="body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+            };
+            date_input.datepicker(options);
+    })
     </script>
 
     <style>
@@ -98,8 +147,8 @@
             border: .1rem solid grey;
             border-radius: .5rem;
             padding: .75rem 1.25rem;
-            transition-duration: 2s;
             margin: 10%;
+            transition-duration: 2s;
         }
 
         .drop-ok {
@@ -127,6 +176,23 @@
             margin:10pt;
             font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
         }
+        .row {
+            margin-bottom:10pt;
+        }
+        .not-ready-btn {
+            color:red;
+            border-color:red;
+        }
+        .not-ready-btn:hover {
+            background-color:red;
+            border-color:red;
+        }
+        .not-ready-btn:hover #normalMsg{
+            display:none;
+        }
+        .not-ready-btn:not(:hover) #errorMsg{
+            display:none;
+        }
     </style>
     <div class="jumbotron text-center">
         <h1>XML Generator</h1>
@@ -145,30 +211,69 @@
             </div>
         </div>
 
-        <form method="post" asp-action="Index" enctype="multipart/form-data">
+        <form id="mainForm" method="post" asp-action="Index" enctype="multipart/form-data">
             <input asp-for="OutagesCSV" type="hidden" id="outagesCsvFilename" />
             <input asp-for="CriticalBranchesCSV" type="hidden" id="criticalBranchesCsvFilename" />
             ConstraintTimeInterval:
+            <div class="row">
+                <div class="col-md-4">
+                    <input
+                           class="form-control"
+                           id="date-start"
+                           name="date"
+                           placeholder="MM/DD/YYYY"
+                           type="text"
+                           onchange="onConstraintIntervalChanged();"/>
+                </div>
+                <div class="col-md-2">
+                    <input
+                           class="form-control"
+                           id="time-start"
+                           placeholder="HH:MM"
+                           type="time"
+                           onchange="onConstraintIntervalChanged();"/>
+                </div>
+                <div class="col-md-4">
+                    <input
+                           class="form-control"
+                           id="date-end"
+                           name="date"
+                           placeholder="MM/DD/YYYY"
+                           type="text"
+                           onchange="onConstraintIntervalChanged();"/>
+                </div>
+                <div class="col-md-2">
+                    <input
+                           class="form-control"
+                           id="time-end"
+                           placeholder="HH:MM"
+                           type="time"
+                           onchange="onConstraintIntervalChanged();"/>
+                </div>
+            </div>
             <input asp-for="Settings.constraintTimeInterval"
                    class="form-control"
-                   type="text"
-                   value="2019-02-19T23:00Z/2019-02-20T23:00Z" /><br />
+                   type="hidden"
+                   id="constraintTimeInterval" />
             ServerIdentification:
             <input asp-for="Settings.senderIdentification"
                    class="form-control"
                    type="text"
-                   value="17XTSO-CS------W" /><br />
+                   value="17XTSO-CS------W" />
             ReceiverIdentification:
             <input asp-for="Settings.receiverIdentification"
                    class="form-control"
                    type="text"
-                   value="17XTSO-CS------W" /><br />
+                   value="17XTSO-CS------W" />
             Outages per branch:
             <input asp-for="Settings.outagesPerBranch"
                    class="form-control"
                    type="number"
-                   value="1" /><br />
-            <input type="submit" class="btn btn-primary btn-lg btn-block" />
+                   value="1" />
+            <button id="submitButton" type="button" onclick="submit();" class="btn btn-lg btn-block btn-outline-primary not-ready-btn">
+                <span id="normalMsg">Submit</span>
+                <span id="errorMsg">Files not uploaded.</span>
+            </button>
         </form>
         <form action="download" method="get">
             <input type="hidden" value="@Model.OutputFile" name="filename" />
