@@ -19,35 +19,35 @@ namespace webXML.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Model m, IFormFile outagesFile, IFormFile criticalBranchesFile)
+        public IActionResult Index(Model m)
         {
-            string path = Path.GetTempFileName();
-            if (outagesFile != null)
-            {
-                using (Stream s = System.IO.File.Create(path))
-                {
-                    outagesFile.CopyTo(s);
-                    s.Close();
-                }
-                m.OutagesCSV = path;
-            }
-
-            if (criticalBranchesFile != null)
-            {
-                path = Path.GetTempFileName();
-                using (Stream s = System.IO.File.Create(path))
-                {
-                    criticalBranchesFile.CopyTo(s);
-                    s.Close();
-                }
-                m.CriticalBranchesCSV = path;
-            }
 
             if (ModelState.IsValid)
             {
                 m.Generate();
             }
             return View(m);
+        }
+        [HttpPost("upload")]
+        public IActionResult Upload(Model m, IFormFile file, int fileType)
+        {
+            string path = Path.GetTempFileName();
+            if (file != null)
+            {
+                using (Stream s = System.IO.File.Create(path))
+                {
+                    file.CopyTo(s);
+                    s.Close();
+                }
+                if (fileType == 0)
+                {
+                    m.OutagesCSV = path;
+                } else if (fileType == 1)
+                {
+                    m.CriticalBranchesCSV = path;
+                }
+            }
+            return Content(path);
         }
         [HttpGet("download")]
         public IActionResult Download(string filename)

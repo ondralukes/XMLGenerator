@@ -16,6 +16,7 @@ namespace webXML.Models
         public string Output { get; set; }
         public string OutagesCSV { get; set; }
         public string CriticalBranchesCSV { get; set; }
+        public string ResultSummary { get; set; }
         private string _OutputFile;
         public string OutputFile {
             get {
@@ -30,7 +31,6 @@ namespace webXML.Models
         private Random rnd;
         public Model()
         {
-            Output = "<empty>";
             Settings = new Settings();
             rnd = new Random();
         }
@@ -57,8 +57,10 @@ namespace webXML.Models
                     ZipFile.CreateFromDirectory(tempDirectory, _OutputFile);
                     Directory.Delete(tempDirectory, true);
                 }
+                
             }
-            if(File.Exists(OutagesCSV)) File.Delete(OutagesCSV);
+            ResultSummary = generator.Summary;
+            if (File.Exists(OutagesCSV)) File.Delete(OutagesCSV);
             if (File.Exists(CriticalBranchesCSV)) File.Delete(CriticalBranchesCSV);
 
             Output = outStream.ToString();

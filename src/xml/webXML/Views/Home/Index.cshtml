@@ -2,42 +2,193 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<h1>Index</h1>
-<form method="post" asp-action="Index" enctype="multipart/form-data">
-    Outages CSV file:
-    <input name="outagesFile" type="file" /><br />
-    Critical Branches CSV file:
-    <input name="criticalBranchesFile" type="file" /><br />
-    <br />
-    ConstraintTimeInterval:
-    <input
-           asp-for="Settings.constraintTimeInterval"
-           type="text"
-           value="2019-02-19T23:00Z/2019-02-20T23:00Z"
-           /><br />
-    ServerIdentification:
-    <input
-           asp-for="Settings.senderIdentification"
-           type="text"
-           value="17XTSO-CS------W"
-           /><br />
-    ReceiverIdentification:
-    <input
-           asp-for="Settings.receiverIdentification"
-           type="text"
-           value="17XTSO-CS------W"
-           /><br />
-    Outages per branch:
-    <input
-           asp-for="Settings.outagesPerBranch"
-           type="number"
-           value="1"
-           /><br />
-    <input type="submit" />
-</form>
-<form action="download" method="get">
-    <input type="hidden" value="@Model.OutputFile" name="filename"/>
-    <input id="downloadBtn" type="submit" value="Download" style="@(Model.OutputFile==null?"display: none;":"")" onclick="document.getElementById('downloadBtn').style.display = 'none';">
-</form>
-<p style="white-space: pre-line">@Model.Output</p>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Bootstrap Date-Picker Plugin -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+</head>
+<body>
+    <script>
+        function dragOverHandler(ev) {
+            ev.preventDefault();
+        }
+        function dropHandler(ev, index) {
+            ev.preventDefault();
+
+            if (ev.dataTransfer.items) {
+                // Use DataTransferItemList interface to access the file(s)
+                for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+                    // If dropped items aren't files, reject them
+                    if (ev.dataTransfer.items[i].kind === 'file') {
+                        var file = ev.dataTransfer.items[i].getAsFile();
+                        console.log('... file[' + i + '].name = ' + file.name);
+                        uploadFile(file, index);
+                    }
+                }
+            } else {
+                // Use DataTransfer interface to access the file(s)
+                for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+                    console.log('... file[' + i + '].name = ' + ev.dataTransfer.files[i].name);
+                    uploadFile(file, index);
+                }
+            }
+        }
+        function uploadFile(file, index) {
+            var url = 'upload'
+            var xhr = new XMLHttpRequest()
+            var formData = new FormData()
+            xhr.open('POST', url, true)
+
+            xhr.addEventListener('readystatechange', function (e) {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(index + "Upload OK");
+                    if (index == 0) {
+                        document.getElementById('outagesCsvFilename').value = xhr.responseText;
+                        document.getElementById('outagesDrop').innerHTML = "Upload OK!";
+                        document.getElementById('outagesDrop').classList.add('drop-ok');
+                        document.getElementById('outagesDrop').classList.remove('drop-fail');
+                    } else if (index == 1) {
+                        document.getElementById('criticalBranchesCsvFilename').value = xhr.responseText;
+                        document.getElementById('criticalBranchesDrop').innerHTML = "Upload OK!";
+                        document.getElementById('criticalBranchesDrop').classList.add('drop-ok');
+                        document.getElementById('criticalBranchesDrop').classList.remove('drop-fail');
+                    }
+                }
+                else if (xhr.readyState == 4 && xhr.status != 200) {
+                    console.log("Upload Error");
+                    if (index == 0) {
+                        document.getElementById('outagesCsvFilename').value = "";
+                        document.getElementById('outagesDrop').innerHTML = "Upload Failed!";
+                        document.getElementById('outagesDrop').classList.add('drop-fail');
+                        document.getElementById('outagesDrop').classList.remove('drop-ok');
+                    } else if (index == 1) {
+                        document.getElementById('criticalBranchesCsvFilename').value = "";
+                        document.getElementById('criticalBranchesDrop').innerHTML = "Upload Failed!";
+                        document.getElementById('criticalBranchesDrop').classList.add('drop-fail');
+                        document.getElementById('criticalBranchesDrop').classList.remove('drop-ok');
+                    }
+                }
+            })
+
+            formData.append('file', file);
+            formData.append('index', index);
+
+
+            xhr.send(formData)
+        }
+        function displayRaw() {
+            document.getElementById('rawOutput').style.display = "";
+            document.getElementById('viewRawBtn').style.display = "none";
+        }
+    </script>
+
+    <style>
+        .drop {
+            color: #333;
+            text-shadow: none;
+            background-color: #fff;
+            border: .1rem solid grey;
+            border-radius: .5rem;
+            padding: .75rem 1.25rem;
+            transition-duration: 2s;
+            margin: 10%;
+        }
+
+        .drop-ok {
+            border: .1rem solid green;
+            background-color: lightgreen;
+        }
+
+        .drop-fail {
+            border: .1rem solid red;
+            background-color: #ff5145;
+        }
+        .btn{
+            margin-top:10pt;
+        }
+        .res-text{
+            margin-top:10pt;
+            margin-bottom:10pt;
+        }
+        body{
+            margin-bottom: 25pt;
+        }
+        .raw-output
+        {
+            background-color: lightgray;
+            margin:10pt;
+            font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+        }
+    </style>
+    <div class="jumbotron text-center">
+        <h1>XML Generator</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="drop text-center" ondrop="dropHandler(event, 0);" ondragover="dragOverHandler(event);" id="outagesDrop">
+                    Drop your outages CSV file here
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="drop text-center" ondrop="dropHandler(event, 1);" ondragover="dragOverHandler(event);" id="criticalBranchesDrop">
+                    Drop your critical branches CSV file here
+                </div>
+            </div>
+        </div>
+
+        <form method="post" asp-action="Index" enctype="multipart/form-data">
+            <input asp-for="OutagesCSV" type="hidden" id="outagesCsvFilename" />
+            <input asp-for="CriticalBranchesCSV" type="hidden" id="criticalBranchesCsvFilename" />
+            ConstraintTimeInterval:
+            <input asp-for="Settings.constraintTimeInterval"
+                   class="form-control"
+                   type="text"
+                   value="2019-02-19T23:00Z/2019-02-20T23:00Z" /><br />
+            ServerIdentification:
+            <input asp-for="Settings.senderIdentification"
+                   class="form-control"
+                   type="text"
+                   value="17XTSO-CS------W" /><br />
+            ReceiverIdentification:
+            <input asp-for="Settings.receiverIdentification"
+                   class="form-control"
+                   type="text"
+                   value="17XTSO-CS------W" /><br />
+            Outages per branch:
+            <input asp-for="Settings.outagesPerBranch"
+                   class="form-control"
+                   type="number"
+                   value="1" /><br />
+            <input type="submit" class="btn btn-primary btn-lg btn-block" />
+        </form>
+        <form action="download" method="get">
+            <input type="hidden" value="@Model.OutputFile" name="filename" />
+            <input id="downloadBtn"
+                   class="btn btn-primary btn-lg btn-block"
+                   type="submit"
+                   value="Download"
+                   style="@(Model.OutputFile==null?"display: none;":"")"
+                   onclick="document.getElementById('downloadBtn').style.display = 'none';">
+        </form>
+        <div class="lead text-center res-text">@Model.ResultSummary</div>
+        <div class="btn btn-lg btn-block btn-outline-primary"
+             id="viewRawBtn"
+             style="@(Model.Output==null?"display: none;":"")"
+             onclick="displayRaw()">
+            View raw output
+        </div>
+        <div id="rawOutput" class="raw-output" style="display: none;">
+            <p  style="white-space: pre-line;">@Model.Output</p>
+        </div>
+    </div>
+</body>
+</html>

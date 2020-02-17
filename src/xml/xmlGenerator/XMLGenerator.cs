@@ -27,6 +27,8 @@ namespace xmlGenerator
         public delegate ValidationResultPromptResult ValidationResultPromptDelegate(List<SuperXmlSchemaException> _xmlExceptions, bool allowContinue);
         public ValidationResultPromptDelegate validationResultPrompt;
 
+        public string Summary;
+
         public XMLGenerator(TextWriter outStream, string outPath)
         {
             rnd = new Random();
@@ -118,7 +120,11 @@ namespace xmlGenerator
             if (SaveXML(doc, Path.Combine(outputPath, "ContingencyDictionary.xml")))
             {
                 Validator validator = new Validator(Path.Combine(outputPath, "ContingencyDictionary.xml"), Path.Combine(outputPath, "flowbasedcontingency-01.xsd"), outputStream, validationResultPrompt);
-                if (!validator.Validate(consoleOnly)) return false;
+                if (!validator.Validate(consoleOnly))
+                {
+                    Summary = "Validation failed.";
+                    return false;
+                }
             }
             outputStream.WriteLine();
 
@@ -230,7 +236,11 @@ namespace xmlGenerator
                 if (SaveXML(doc, Path.Combine(outputPath,$"IndividualCriticalBranches_{tsoOrigin}.xml")))
                 {
                     Validator validator = new Validator(Path.Combine(outputPath, $"IndividualCriticalBranches_{tsoOrigin}.xml"), Path.Combine(outputPath, "flowbasedconstraintdocument-17.xsd"), outputStream, validationResultPrompt);
-                    if (!validator.Validate(consoleOnly)) return false;
+                    if (!validator.Validate(consoleOnly))
+                    {
+                        Summary = "Validation failed.";
+                        return false;
+                    }
                 }
                 outputStream.WriteLine();
             }
@@ -413,6 +423,7 @@ namespace xmlGenerator
             {
                 outputStream.WriteLine($"Failed to load outages: {e.Message}");
                 if (streamReader != null) streamReader.Close();
+                Summary = "Failed to load outages from the file.";
                 return false;
             }
             if (streamReader != null) streamReader.Close();
@@ -474,6 +485,7 @@ namespace xmlGenerator
             {
                 outputStream.WriteLine($"Failed to load critical branches: {e.Message}");
                 if(streamReader != null) streamReader.Close();
+                Summary = "Failed to load critical branches from the file.";
                 return false;
             }
             if (streamReader != null) streamReader.Close();
