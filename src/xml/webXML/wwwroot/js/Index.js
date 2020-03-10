@@ -47,13 +47,13 @@ function uploadFile(file, index) {
             console.log(index + "Upload OK");
             if (index == 0) {
                 document.getElementById('outagesCsvFilename').value = xhr.responseText;
-                document.getElementById('outagesDrop').innerHTML = "Upload OK!";
+                document.getElementById('outagesDrop').innerHTML = file.name + ', ' + formatFileSize(file.size);
                 document.getElementById('outagesDrop').classList.add('drop-ok');
                 document.getElementById('outagesDrop').classList.remove('drop-fail');
                 outagesFile = true;
             } else if (index == 1) {
                 document.getElementById('criticalBranchesCsvFilename').value = xhr.responseText;
-                document.getElementById('criticalBranchesDrop').innerHTML = "Upload OK!";
+                document.getElementById('criticalBranchesDrop').innerHTML = file.name + ', ' + formatFileSize(file.size);
                 document.getElementById('criticalBranchesDrop').classList.add('drop-ok');
                 document.getElementById('criticalBranchesDrop').classList.remove('drop-fail');
                 criticalBranchesFile = true;
@@ -114,6 +114,19 @@ function submit() {
     if (readyToSubmit) {
         document.getElementById('mainForm').submit();
     }
+}
+
+function formatFileSize(bytes) {
+    if (Math.abs(bytes) < 1024) {
+        return bytes + ' B';
+    }
+    var units = ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+    var u = -1;
+    do {
+        bytes /= 1024;
+        u++;
+    } while (Math.abs(bytes) >= 1024 && u < units.length - 1);
+    return bytes.toFixed(1) + ' ' + units[u];
 }
 $(document).ready(function () {
     var date_input = $('input[name="date"]');
