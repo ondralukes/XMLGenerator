@@ -55,10 +55,9 @@ namespace webXML.Models
                 {
                     OutputFile = $"{tempDirectory}.zip";
                     ZipFile.CreateFromDirectory(tempDirectory, _OutputFile);
-                    Directory.Delete(tempDirectory, true);
                 }
-                
             }
+            Directory.Delete(tempDirectory, true);
             ResultSummary = generator.Summary;
             if (File.Exists(OutagesCSV)) File.Delete(OutagesCSV);
             if (File.Exists(CriticalBranchesCSV)) File.Delete(CriticalBranchesCSV);
