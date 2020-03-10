@@ -1,0 +1,62 @@
+﻿.drop {
+    color: #333;
+    text-shadow: none;
+    background-color: #fff;
+    border: .1rem solid grey;
+    border-radius: .5rem;
+    padding: .75rem 1.25rem;
+    margin: 10%;
+    transition-duration: 2s;
+}
+
+.drop-ok {
+    border: .1rem solid green;
+    background-color: lightgreen;
+}
+
+.drop-fail {
+    border: .1rem solid red;
+    background-color: #ff5145;
+}
+
+.btn {
+    margin-top: 10pt;
+}
+
+.res-text {
+    margin-top: 10pt;
+    margin-bottom: 10pt;
+}
+
+body {
+    margin-bottom: 25pt;
+}
+
+.raw-output {
+    background-color: lightgray;
+    margin: 10pt;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+}
+
+.row {
+    margin-bottom: 10pt;
+}
+
+.not-ready-btn {
+    color: red !important;
+    border-color: red;
+}
+
+    .not-ready-btn:hover {
+        color: white !important;
+        background-color: red;
+        border-color: red;
+    }
+
+        .not-ready-btn:hover #normalMsg {
+            display: none;
+        }
+
+    .not-ready-btn:not(:hover) #errorMsg {
+        display: none;
+    }
