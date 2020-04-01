@@ -17,6 +17,7 @@ namespace webXML.Models
         public string OutagesCSV { get; set; }
         public string CriticalBranchesCSV { get; set; }
         public string ResultSummary { get; set; }
+        public bool IncludeXSD { get; set; }
         private string _OutputFile;
         public string OutputFile {
             get {
@@ -53,6 +54,15 @@ namespace webXML.Models
                 generator.SetSettings(Settings);
                 if (generator.Generate())
                 {
+                    if (!IncludeXSD)
+                    {
+                        //Remove XSD files
+                        string[] xsdFiles = Directory.GetFiles(tempDirectory, "*.xsd");
+                        foreach (var file in xsdFiles)
+                        {
+                            File.Delete(file);
+                        }
+                    }
                     OutputFile = $"{tempDirectory}.zip";
                     ZipFile.CreateFromDirectory(tempDirectory, _OutputFile);
                 }

@@ -46,12 +46,13 @@ namespace xmlGenerator
                 try
                 {
                     File.Copy(schema, Path.Combine(outputPath, Path.GetFileName(schema)), true);
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     outputStream.WriteLine($"Failed to copy {schema} to target directory");
                 }
             }
-            
+
         }
 
         public void SetSettings(Settings s)

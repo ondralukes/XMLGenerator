@@ -44,38 +44,34 @@
             ConstraintTimeInterval:
             <div class="row">
                 <div class="col-md-4">
-                    <input
-                           class="form-control"
+                    <input class="form-control"
                            id="date-start"
                            name="date"
                            placeholder="MM/DD/YYYY"
                            type="text"
-                           onchange="onConstraintIntervalChanged();"/>
+                           onchange="onConstraintIntervalChanged();" />
                 </div>
                 <div class="col-md-2">
-                    <input
-                           class="form-control"
+                    <input class="form-control"
                            id="time-start"
                            placeholder="HH:MM"
                            type="time"
-                           onchange="onConstraintIntervalChanged();"/>
+                           onchange="onConstraintIntervalChanged();" />
                 </div>
                 <div class="col-md-4">
-                    <input
-                           class="form-control"
+                    <input class="form-control"
                            id="date-end"
                            name="date"
                            placeholder="MM/DD/YYYY"
                            type="text"
-                           onchange="onConstraintIntervalChanged();"/>
+                           onchange="onConstraintIntervalChanged();" />
                 </div>
                 <div class="col-md-2">
-                    <input
-                           class="form-control"
+                    <input class="form-control"
                            id="time-end"
                            placeholder="HH:MM"
                            type="time"
-                           onchange="onConstraintIntervalChanged();"/>
+                           onchange="onConstraintIntervalChanged();" />
                 </div>
             </div>
             <input asp-for="Settings.constraintTimeInterval"
@@ -97,6 +93,10 @@
                    class="form-control"
                    type="number"
                    value="1" />
+            <input asp-for="IncludeXSD"
+                   id="includeXSDcheckbox"
+                   type="checkbox" />
+            <label class="form-check-label" for="includeXSDcheckbox">Include XSD schema files in output</label>
             <button id="submitButton" type="button" onclick="submit();" class="btn btn-lg btn-block btn-outline-primary not-ready-btn" disabled>
                 <span id="normalMsg">Submit</span>
                 <span id="errorMsg">Files not uploaded.</span>
