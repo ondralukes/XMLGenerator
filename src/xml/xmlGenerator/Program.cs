@@ -22,7 +22,11 @@ namespace xmlGenerator
             if (!Directory.Exists("output")) Directory.CreateDirectory("output");
 
             StringWriter testOutput = new StringWriter();
-            XMLGenerator generator = new XMLGenerator(Console.Out,"output");
+            XMLGenerator generator = new XMLGenerator(Console.Out, "output");
+
+            String outagesPath = PromptForFile("Select outages CSV");
+            String criticalBranchesPath = PromptForFile("Select critical branches CSV");
+
 
             //Prompt user for data
             InputPrompt prompt;
@@ -52,8 +56,8 @@ namespace xmlGenerator
             generator.SetSettings(s);
 
             bool loaded = true;
-            loaded = loaded && generator.LoadOutagesFromCSV("outages.csv");
-            loaded = loaded && generator.LoadCriticalBranchesFromCSV("criticalBranches.csv");
+            loaded = loaded && generator.LoadOutagesFromCSV(outagesPath);
+            loaded = loaded && generator.LoadCriticalBranchesFromCSV(criticalBranchesPath);
             if (!loaded)
             {
                 Console.ReadLine();
@@ -82,6 +86,26 @@ namespace xmlGenerator
                     }
                 }
             }
+        }
+
+        static string PromptForFile(string title)
+        {
+            string path = "";
+            while (path == "")
+            {
+                using (OpenFileDialog fileDialog = new OpenFileDialog())
+                {
+                    fileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
+                    fileDialog.FilterIndex = 2;
+                    fileDialog.RestoreDirectory = true;
+                    fileDialog.Title = "Select outages CSV";
+                    if (fileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        path = fileDialog.FileName;
+                    }
+                }
+            }
+            return path;
         }
         static OverwritePromptResult OverwritePrompt(string filename)
         {

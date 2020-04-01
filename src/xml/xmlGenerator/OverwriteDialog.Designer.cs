@@ -39,7 +39,7 @@
             // 
             this.mainLabel.Location = new System.Drawing.Point(13, 9);
             this.mainLabel.Name = "mainLabel";
-            this.mainLabel.Size = new System.Drawing.Size(345, 56);
+            this.mainLabel.Size = new System.Drawing.Size(431, 56);
             this.mainLabel.TabIndex = 0;
             this.mainLabel.Text = "file.xml already exists";
             this.mainLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -56,7 +56,7 @@
             // 
             // noForAllBtn
             // 
-            this.noForAllBtn.Location = new System.Drawing.Point(207, 97);
+            this.noForAllBtn.Location = new System.Drawing.Point(293, 100);
             this.noForAllBtn.Name = "noForAllBtn";
             this.noForAllBtn.Size = new System.Drawing.Size(151, 23);
             this.noForAllBtn.TabIndex = 2;
@@ -66,7 +66,7 @@
             // 
             // noBtn
             // 
-            this.noBtn.Location = new System.Drawing.Point(207, 68);
+            this.noBtn.Location = new System.Drawing.Point(293, 68);
             this.noBtn.Name = "noBtn";
             this.noBtn.Size = new System.Drawing.Size(151, 23);
             this.noBtn.TabIndex = 3;
@@ -89,7 +89,7 @@
             this.AcceptButton = this.yesBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(370, 128);
+            this.ClientSize = new System.Drawing.Size(456, 135);
             this.Controls.Add(this.yesBtn);
             this.Controls.Add(this.noBtn);
             this.Controls.Add(this.noForAllBtn);
