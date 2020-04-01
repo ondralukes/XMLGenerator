@@ -98,7 +98,7 @@ namespace xmlGenerator
                     fileDialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
                     fileDialog.FilterIndex = 2;
                     fileDialog.RestoreDirectory = true;
-                    fileDialog.Title = "Select outages CSV";
+                    fileDialog.Title = title;
                     if (fileDialog.ShowDialog() == DialogResult.OK)
                     {
                         path = fileDialog.FileName;
