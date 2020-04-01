@@ -72,8 +72,7 @@ namespace xmlGenerator
                     return false;
                 case ValidationResult.Failed:
                     outputStream.WriteLine("Validation failed!");
-                    outputStream.WriteLine("Continuing without validation");
-                    return true;
+                    return false;
             }
             return true;
         }
