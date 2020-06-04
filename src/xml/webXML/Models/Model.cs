@@ -73,6 +73,22 @@ namespace webXML.Models
             if (File.Exists(CriticalBranchesCSV)) File.Delete(CriticalBranchesCSV);
 
             Output = outStream.ToString();
-    }
+
+            // Clear old outputs
+            ClearTempFolder();
+        }
+
+        static void ClearTempFolder()
+        {
+            string[] files = Directory.GetFiles("temp");
+            foreach(var filename in files)
+            {
+                FileInfo info = new FileInfo(filename);
+                if(DateTime.UtcNow.Subtract(info.CreationTimeUtc).TotalHours > 12)
+                {
+                    File.Delete(filename);
+                }
+            }
+        }
     }
 }
