@@ -18,6 +18,7 @@ namespace webXML.Models
         public string CriticalBranchesCSV { get; set; }
         public string ResultSummary { get; set; }
         public bool IncludeXSD { get; set; }
+        public string SavedScroll { get; set; }
         private string _OutputFile;
         public string OutputFile {
             get {
@@ -34,6 +35,7 @@ namespace webXML.Models
         {
             Settings = new Settings();
             rnd = new Random();
+            SavedScroll = "0";
         }
 
         public void Generate()

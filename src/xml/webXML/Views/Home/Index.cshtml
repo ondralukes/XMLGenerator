@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="~/css/Index.css" />
     <script src="~/js/Index.js"></script>
 </head>
-<body>
+<body onload="onLoad();">
     <div class="jumbotron text-center">
         <h1>XML Generator</h1>
     </div>
@@ -41,6 +41,7 @@
         <form id="mainForm" method="post" asp-action="Index" enctype="multipart/form-data">
             <input asp-for="OutagesCSV" type="hidden" id="outagesCsvFilename" />
             <input asp-for="CriticalBranchesCSV" type="hidden" id="criticalBranchesCsvFilename" />
+            <input asp-for="SavedScroll" type="hidden" id="scroll" />
             ConstraintTimeInterval:
             <div class="row">
                 <div class="col-md-4">

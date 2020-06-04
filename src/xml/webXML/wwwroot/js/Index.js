@@ -2,6 +2,18 @@
 var criticalBranchesFile = false;
 var readyToSubmit = false;
 
+function onScroll() {
+    var scroll = document.body.scrollTop;
+    if (scroll < document.documentElement.scrollTop) scroll = document.documentElement.scrollTop;
+    document.getElementById('scroll').value = scroll;
+}
+
+function onLoad() {
+    var scroll = parseInt(document.getElementById('scroll').value);
+    window.scrollTo(0, scroll);
+    window.addEventListener('scroll', onScroll);
+}
+
 function onConstraintIntervalChanged() {
     var startDate = document.getElementById('date-start').value;
     var endDate = document.getElementById('date-end').value;
