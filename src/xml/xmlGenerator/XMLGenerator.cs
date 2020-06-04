@@ -49,7 +49,7 @@ namespace xmlGenerator
                 }
                 catch (Exception e)
                 {
-                    outputStream.WriteLine($"Failed to copy {schema} to target directory");
+                    outputStream.WriteLine($"Failed to copy {ToRelativePath(schema)} to target directory");
                 }
             }
 
@@ -310,7 +310,7 @@ namespace xmlGenerator
 
                 if (!overwriteAll && !dontOverwriteAll)
                 {
-                    outputStream.Write($"{filename} already exists. Overwrite? : ");
+                    outputStream.Write($"{ToRelativePath(filename)} already exists. Overwrite? : ");
 
                     while (true)
                     {
@@ -339,12 +339,12 @@ namespace xmlGenerator
                 {
                     if (overwriteAll)
                     {
-                        outputStream.Write($"{filename} already exists. ");
+                        outputStream.Write($"{ToRelativePath(filename)} already exists. ");
                         outputStream.WriteLine("Overwriting.");
                     }
                     else if (dontOverwriteAll)
                     {
-                        outputStream.Write($"{filename} already exists. ");
+                        outputStream.Write($"{ToRelativePath(filename)} already exists. ");
                         outputStream.WriteLine("Not saved.");
                         return false;
                     }
@@ -364,7 +364,7 @@ namespace xmlGenerator
                 }
                 catch (Exception e)
                 {
-                    outputStream.WriteLine($"Saving {filename} failed ({e.Message})");
+                    outputStream.WriteLine($"Saving {ToRelativePath(filename)} failed ({e.Message})");
                     if (consoleOnly) return false;
                     outputStream.Write("Retry? [y/n]:");
                     while (true)
@@ -492,6 +492,13 @@ namespace xmlGenerator
             }
             if (streamReader != null) streamReader.Close();
             return true;
+        }
+        public static string ToRelativePath(string filename)
+        {
+            return filename
+                .Substring(
+                Environment.CurrentDirectory.Length + 1
+                );
         }
     }
     class Outage

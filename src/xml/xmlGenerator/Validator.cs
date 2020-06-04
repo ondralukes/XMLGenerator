@@ -78,7 +78,7 @@ namespace xmlGenerator
         }
         public ValidationResult ValidateCore()
         {
-            outputStream.WriteLine($"[Validator] Validating {filename}");
+            outputStream.WriteLine($"[Validator] Validating {XMLGenerator.ToRelativePath(filename)}");
             XmlReaderSettings readerSettings = new XmlReaderSettings();
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessInlineSchema;
             readerSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
